@@ -1,0 +1,10 @@
+.DS_Store
+*.log
+/wp-config.php
+/wp-content/uploads/
+/wp-content/cache/
+/wp-content/upgrade/
+/wp-content/backups/
+*.sql
+/.agents/
+/.codex/

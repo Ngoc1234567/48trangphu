@@ -1,0 +1,21 @@
+# Protect private files on Apache hosting.
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule (^|/)\. - [F,L]
+RewriteRule \.(sql|log|ini|sh)$ - [F,L,NC]
+</IfModule>
+<FilesMatch "^wp-config\.php$">
+Require all denied
+</FilesMatch>
+
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
