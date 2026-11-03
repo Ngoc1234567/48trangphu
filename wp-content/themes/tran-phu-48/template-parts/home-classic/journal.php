@@ -1,7 +1,8 @@
-<?php if (!defined('ABSPATH')) exit; ?>
+<?php if (!defined('ABSPATH')) exit; $button=tp48_home_field('journal','button'); ?>
 <section class="journal ruled" id="nhat-ky" aria-labelledby="journal-title">
-        <img class="journal-image" src="<?php echo esc_url(tp48_image('journal')); ?>" alt="Ảnh minh họa hoạt động xây dựng, không phải ảnh tiến độ thực tế của dự án" loading="lazy">
-        <h2 id="journal-title">Nhật ký<br>công trình<span class="short-line"></span></h2>
-        <div class="journal-copy"><p>Cập nhật tiến độ thi công, hình ảnh thực tế<br>và những dấu mốc quan trọng của dự án.</p><button class="text-link" aria-expanded="<?php echo is_page_template('page-templates/nhat-ky.php') ? 'true' : 'false'; ?>" aria-controls="journal-entries" data-journal-toggle>Theo dõi nhật ký <span aria-hidden="true">⟶</span></button></div>
-    <span class="classic-photo-note">Ảnh minh họa hoạt động xây dựng</span>
+<?php echo tp48_home_image_html(tp48_home_field('journal','image'),tp48_home_field('journal','alt'),'journal-image'); ?>
+<h2 id="journal-title"><?php echo tp48_home_text('journal','title',true); ?><span class="short-line"></span></h2>
+<div class="journal-copy"><p><?php echo tp48_home_text('journal','description',true); ?></p>
+<?php if (tp48_home_field('journal','mode')==='page'): if (tp48_home_link_attributes($button)): ?><a class="text-link" <?php echo tp48_home_link_attributes($button); ?>><?php echo tp48_home_text('journal','button_label'); ?> <span aria-hidden="true">⟶</span></a><?php endif; else: ?><button type="button" class="text-link" aria-expanded="false" aria-controls="journal-entries" data-journal-toggle><?php echo tp48_home_text('journal','button_label'); ?> <span aria-hidden="true">⟶</span></button><?php endif; ?></div>
+<?php if (tp48_home_field('journal','image_note')): ?><span class="classic-photo-note"><?php echo tp48_home_text('journal','image_note'); ?></span><?php endif; ?>
 </section>

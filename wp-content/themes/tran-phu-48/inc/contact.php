@@ -7,10 +7,13 @@ function tp48_contact() {
     if (($_SERVER['REQUEST_METHOD'] ?? '')!=='POST') $finish('invalid');
     if (!wp_verify_nonce(tp48_post_value('tp48_nonce'),'tp48_contact')) $finish('expired');
     if (tp48_post_value('website')) $finish('error');
+    $home_id=absint(tp48_post_value('tp48_home_page'));
+    if ($home_id && (!(get_post_status($home_id)==='publish' && ($home_id===(int)get_option('page_on_front') || get_page_template_slug($home_id)==='front-page.php')) || !wp_verify_nonce(tp48_post_value('tp48_home_nonce'),'tp48_home_contact_'.$home_id))) $finish('expired');
     $name=sanitize_text_field(tp48_post_value('full_name'));
     $email=sanitize_email(tp48_post_value('email'));
     $phone=sanitize_text_field(tp48_post_value('phone'));
     if (!$name || mb_strlen($name)>100 || !is_email($email) || strlen($email)>254 || ($phone && !preg_match('/^[+0-9 ().-]{8,20}$/',$phone))) $finish('invalid');
+    if ($home_id && tp48_home_field('contact','show_phone',$home_id) && tp48_home_field('contact','phone_required',$home_id) && !$phone) $finish('invalid');
     if (tp48_post_value('consent')!=='1') $finish('consent');
     $rate_key='tp48_'.hash_hmac('sha256',($_SERVER['REMOTE_ADDR'] ?? 'local'),wp_salt());
     if (get_transient($rate_key)) $finish('wait');
@@ -20,7 +23,8 @@ function tp48_contact() {
     update_post_meta($id,'_tp48_consent_at',gmdate('c'));
     update_post_meta($id,'_tp48_consent_version','2026-11-03');
     set_transient($rate_key,1,MINUTE_IN_SECONDS);
-    $recipient=sanitize_email(tp48_text('email',get_option('admin_email')));
+    $override=$home_id ? tp48_home_field('contact','recipient',$home_id):'';
+    $recipient=is_string($override) && is_email($override) ? $override:sanitize_email(tp48_text('email',get_option('admin_email')));
     $sent=wp_mail($recipient,'Yêu cầu nhận cập nhật — 48 Trần Phú',"Họ và tên: $name\nEmail: $email\nSố điện thoại: $phone\nĐã đồng ý nhận liên hệ/cập nhật.\nXem yêu cầu: ".admin_url('post.php?post='.$id.'&action=edit'));
     update_post_meta($id,'_tp48_mail_sent',$sent ? '1':'0');
     $finish('success');

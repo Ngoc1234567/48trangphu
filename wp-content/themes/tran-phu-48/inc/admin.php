@@ -1,17 +1,15 @@
 <?php
 if (!defined('ABSPATH')) exit;
 add_action('customize_register',function ($c) {
-    $c->add_section('tp48_home',['title'=>'48 Trần Phú — Hình ảnh & nội dung','priority'=>30]);
+    $c->add_section('tp48_home',['title'=>'48 Trần Phú — Ảnh mặc định / trang chi tiết','description'=>'Nội dung Trang chủ hiện chỉnh tại Trang → Trang chủ → nhóm field ACF. Các thiết lập này dùng cho trang chi tiết và dữ liệu dự phòng.','priority'=>30]);
     foreach (['hero'=>'Ảnh đầu trang (khu vực)','location'=>'Ảnh khu vực đường Trần Phú','sunrise'=>'Ảnh khu vực vịnh Nha Trang'] as $key=>$label) {
         $c->add_setting('tp48_image_'.$key,['default'=>tp48_image($key),'sanitize_callback'=>'esc_url_raw']);
         $c->add_control(new WP_Customize_Image_Control($c,'tp48_image_'.$key,['label'=>$label,'section'=>'tp48_home']));
     }
-    foreach (['headline'=>['Tiêu đề giới thiệu','Thông tin dự án tại 48 Trần Phú, Nha Trang'],'subtitle'=>['Mô tả đầu trang','Tổng quan, vị trí và các cập nhật được công bố khi có thông tin xác nhận.'],'location'=>['Giới thiệu vị trí','Địa điểm dự án: 48 Trần Phú, Nha Trang. Thông tin chi tiết sẽ được cập nhật khi có xác nhận.']] as $key=>$field) {
+    foreach (['location'=>['Giới thiệu vị trí','Địa điểm dự án: 48 Trần Phú, Nha Trang. Thông tin chi tiết sẽ được cập nhật khi có xác nhận.']] as $key=>$field) {
         $c->add_setting('tp48_'.$key,['default'=>$field[1],'sanitize_callback'=>'sanitize_textarea_field']);
         $c->add_control('tp48_'.$key,['label'=>$field[0],'section'=>'tp48_home','type'=>'textarea']);
     }
-    $c->add_setting('tp48_hero_video',['sanitize_callback'=>'absint']);
-    $c->add_control(new WP_Customize_Media_Control($c,'tp48_hero_video',['label'=>'Video đầu trang đã được xác minh (tùy chọn)','mime_type'=>'video','section'=>'tp48_home']));
     $c->add_section('tp48_contact',['title'=>'48 Trần Phú — Liên hệ','priority'=>31]);
     foreach (['phone'=>['Số điện thoại / Zalo','text','sanitize_text_field'],'email'=>['Email nhận yêu cầu','email','sanitize_email']] as $key=>$field) {
         $c->add_setting('tp48_'.$key,['sanitize_callback'=>$field[2]]);
@@ -35,10 +33,3 @@ add_action('save_post_page',function ($id) {
 });
 add_filter('manage_tp48_inquiry_posts_columns',function ($cols) { $cols['tp48_mail']='Email thông báo'; return $cols; });
 add_action('manage_tp48_inquiry_posts_custom_column',function ($col,$id) { if ($col==='tp48_mail') echo esc_html(get_post_meta($id,'_tp48_mail_sent',true)==='1' ? 'Đã chuyển tới hệ thống gửi mail' : 'Chưa gửi được — kiểm tra SMTP'); },10,2);
-
-add_action('customize_register',function ($c) {
-    foreach (['classic_headline'=>['Trang chủ cũ — Tiêu đề','Dấu ấn mới bên vịnh biển'],'classic_subtitle'=>['Trang chủ cũ — Phụ đề','A New Landmark on Nha Trang Bay']] as $key=>$field) {
-        $c->add_setting('tp48_'.$key,['default'=>$field[1],'sanitize_callback'=>'sanitize_textarea_field']);
-        $c->add_control('tp48_'.$key,['label'=>$field[0],'section'=>'tp48_home','type'=>'textarea']);
-    }
-});

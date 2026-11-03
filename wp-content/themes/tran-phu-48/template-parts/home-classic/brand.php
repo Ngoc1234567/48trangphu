@@ -1,0 +1,3 @@
+<?php if (!defined('ABSPATH')) exit; ?>
+<a class="brand" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(trim(tp48_home_field('brand','number').' '.tp48_home_field('brand','name').' '.tp48_home_field('brand','city')).' — Trang chủ'); ?>">
+<?php if (tp48_home_field('brand','logo')): echo tp48_home_image_html(tp48_home_field('brand','logo'),get_bloginfo('name'),'home-logo',true); else: ?><span class="brand-number"><?php echo tp48_home_text('brand','number'); ?></span><span><?php echo tp48_home_text('brand','name'); ?><small><?php echo tp48_home_text('brand','city'); ?></small></span><?php endif; ?></a>
