@@ -8,3 +8,5 @@
 - `construction.jpg`: Cần cẩu lúc hoàng hôn, ảnh minh họa chung — [Kartinkof](https://kartinkof.club/kartinki/19097-kartinki-stroitelnyj-kran-34-foto.html), ảnh `https://kartinkof.club/uploads/posts/2022-09/1662567477_10-kartinkof-club-p-novie-i-krasivie-kartinki-stroitelnii-kran-15.jpg`.
 
 Biểu tượng được viết bằng SVG trong theme. Logo là chữ, không phải file logo gốc. Font Playfair Display và Inter được tải qua Google Fonts.
+
+Các bản WebP của hero/coast/sunrise được tạo từ ảnh JPG hiện có để giảm dung lượng. Ảnh construction.jpg không được dùng trong giao diện mới vì chưa có ảnh tiến độ thực tế được xác nhận.

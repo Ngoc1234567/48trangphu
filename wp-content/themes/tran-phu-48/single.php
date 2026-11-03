@@ -1,0 +1,11 @@
+<?php if (!defined('ABSPATH')) exit; get_header(); ?>
+<main id="main" class="section-page">
+<?php while (have_posts()): the_post(); $progress=get_post_type()==='tp48_journal'; ?>
+<article class="single-story"><header class="page-heading"><p class="eyebrow"><a href="<?php echo esc_url(tp48_page_url($progress ? 'tien-do':'the-journal')); ?>"><?php echo $progress ? 'Tiến độ':'The Journal'; ?></a></p><h1><?php the_title(); ?></h1><p class="post-meta"><time datetime="<?php echo esc_attr(get_the_date('c')); ?>"><?php echo esc_html(get_the_date('d.m.Y')); ?></time><?php if (!$progress): ?> · <?php the_category(' · '); ?><?php endif; ?></p></header>
+<div class="reading-width article-body"><?php if (has_post_thumbnail()) the_post_thumbnail('large',['class'=>'article-cover']); ?><div class="entry-content"><?php the_content(); wp_link_pages(); ?></div><?php if (!$progress) the_tags('<p class="post-tags">Từ khóa: ',', ','</p>'); ?></div>
+</article>
+<section class="section-space ruled"><div class="section-heading"><h2><?php echo $progress ? 'Các cập nhật khác':'Bài viết liên quan'; ?></h2><a class="text-link" href="<?php echo esc_url(tp48_page_url($progress ? 'tien-do':'the-journal')); ?>">Xem tất cả ↗</a></div>
+<?php $related_args=['post_type'=>get_post_type(),'post_status'=>'publish','post__not_in'=>[get_the_ID()],'posts_per_page'=>3,'ignore_sticky_posts'=>true]; $categories=wp_get_post_categories(get_the_ID()); if (!$progress && $categories) $related_args['category__in']=$categories; $related=new WP_Query($related_args); if ($related->have_posts()): ?><div class="story-grid"><?php while ($related->have_posts()): $related->the_post(); get_template_part('template-parts/story-card',null,['progress'=>$progress]); endwhile; ?></div><?php else: tp48_placeholder('Chưa có bài viết khác.'); endif; wp_reset_postdata(); ?>
+</section>
+<?php endwhile; ?>
+</main><?php get_footer(); ?>
