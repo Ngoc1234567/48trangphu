@@ -14,18 +14,22 @@ function tp48_contact() {
     $phone=sanitize_text_field(tp48_post_value('phone'));
     if (!$name || mb_strlen($name)>100 || !is_email($email) || strlen($email)>254 || ($phone && !preg_match('/^[+0-9 ().-]{8,20}$/',$phone))) $finish('invalid');
     if ($home_id && tp48_home_field('contact','show_phone',$home_id) && tp48_home_field('contact','phone_required',$home_id) && !$phone) $finish('invalid');
-    if (tp48_post_value('consent')!=='1') $finish('consent');
+    $consented=tp48_post_value('consent')==='1';
+    if (!$home_id && !$consented) $finish('consent');
+    $consent_note=$consented ? 'Đồng ý nhận liên hệ và cập nhật: Có' : 'Khách gửi yêu cầu nhận thông tin qua form trang chủ; không thu thập xác nhận đồng ý nhận cập nhật.';
     $rate_key='tp48_'.hash_hmac('sha256',($_SERVER['REMOTE_ADDR'] ?? 'local'),wp_salt());
     if (get_transient($rate_key)) $finish('wait');
-    $id=wp_insert_post(['post_type'=>'tp48_inquiry','post_status'=>'private','post_title'=>$name,'post_content'=>"Họ và tên: $name\nEmail: $email\nSố điện thoại: $phone\nĐồng ý nhận liên hệ và cập nhật: Có\nThời điểm: ".current_time('mysql')],true);
+    $id=wp_insert_post(['post_type'=>'tp48_inquiry','post_status'=>'private','post_title'=>$name,'post_content'=>"Họ và tên: $name\nEmail: $email\nSố điện thoại: $phone\n$consent_note\nThời điểm: ".current_time('mysql')],true);
     if (is_wp_error($id) || !$id) $finish('error');
     update_post_meta($id,'_tp48_email',$email);
-    update_post_meta($id,'_tp48_consent_at',gmdate('c'));
-    update_post_meta($id,'_tp48_consent_version','2026-11-03');
+    if ($consented) {
+        update_post_meta($id,'_tp48_consent_at',gmdate('c'));
+        update_post_meta($id,'_tp48_consent_version','2026-11-03');
+    }
     set_transient($rate_key,1,MINUTE_IN_SECONDS);
     $override=$home_id ? tp48_home_field('contact','recipient',$home_id):'';
     $recipient=is_string($override) && is_email($override) ? $override:sanitize_email(tp48_text('email',get_option('admin_email')));
-    $sent=wp_mail($recipient,'Yêu cầu nhận cập nhật — 48 Trần Phú',"Họ và tên: $name\nEmail: $email\nSố điện thoại: $phone\nĐã đồng ý nhận liên hệ/cập nhật.\nXem yêu cầu: ".admin_url('post.php?post='.$id.'&action=edit'));
+    $sent=wp_mail($recipient,'Yêu cầu nhận cập nhật — 48 Trần Phú',"Họ và tên: $name\nEmail: $email\nSố điện thoại: $phone\n$consent_note\nXem yêu cầu: ".admin_url('post.php?post='.$id.'&action=edit'));
     update_post_meta($id,'_tp48_mail_sent',$sent ? '1':'0');
     $finish('success');
 }

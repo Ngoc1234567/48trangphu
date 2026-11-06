@@ -147,7 +147,7 @@
                     "name": "menu",
                     "aria-label": "",
                     "type": "select",
-                    "instructions": "Tạo\/sửa menu tại Giao diện → Menu, sau đó chọn menu ở đây. Trang chủ hiển thị các mục cấp một.",
+                    "instructions": "Trang chủ dùng chung Menu chính tại Giao diện → Menu. Lựa chọn cũ ở đây không còn được sử dụng.",
                     "required": false,
                     "conditional_logic": false,
                     "wrapper": {

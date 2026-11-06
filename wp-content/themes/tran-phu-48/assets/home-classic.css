@@ -79,6 +79,11 @@ html{scroll-padding-top:12px}body{font-size:13px}.site-header{padding:17px 22px;
 .tp48-home-without-leading-hero .site-header{position:relative;background:var(--navy);border-bottom:1px solid var(--line)}
 
 
+.site-header .nav-list{display:flex;align-items:center;gap:inherit;list-style:none;margin:0;padding:0}
+.site-header .nav-list a{display:block}
+@media(max-width:700px){.site-header .nav-list{flex-direction:column;align-items:stretch;gap:2px;width:100%}.site-header .nav-list li:not(:last-child)>a{border-bottom:1px solid var(--line)}}
+.site-header.is-menu-collapsed .nav-list{flex-direction:column;align-items:stretch;gap:2px;width:100%}
+.site-header.is-menu-collapsed .nav-list li:not(:last-child)>a{border-bottom:1px solid var(--line)}
 /* Collapse a longer selected menu before it overlaps the logo. */
 @media(min-width:701px){
 .site-header.is-menu-collapsed .menu-toggle{display:flex;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;padding:8px;background:transparent;border:0;flex-shrink:0}
