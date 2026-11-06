@@ -1,0 +1,10 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/sqwln7y6ck4a/public_html/
+    - /bin/mkdir -p "$DEPLOYPATH"
+    - /bin/cp -R wp-admin wp-includes "$DEPLOYPATH"
+    - /bin/mkdir -p "$DEPLOYPATH/wp-content/themes" "$DEPLOYPATH/wp-content/plugins"
+    - /bin/cp -R wp-content/themes/. "$DEPLOYPATH/wp-content/themes/"
+    - /bin/cp -R wp-content/plugins/. "$DEPLOYPATH/wp-content/plugins/"
+    - /bin/find . -maxdepth 1 -type f -name '*.php' ! -name 'wp-config.php' -exec /bin/cp {} "$DEPLOYPATH" \;
