@@ -1,6 +1,6 @@
 <?php if (!defined('ABSPATH')) exit; ?>
 <section class="contact-section section-space ruled" id="kham-pha" aria-labelledby="contact-title">
-<div class="contact-copy"><p class="eyebrow">Kết nối với 48 Trần Phú</p><h2 id="contact-title">Nhận thông tin<br>cập nhật</h2><p>Để lại thông tin để nhận liên hệ và cập nhật khi có thông tin đã được xác nhận.</p><p class="fine-print">Kênh liên hệ tiếp nhận nhu cầu tìm hiểu thông tin dự án.</p></div>
+<div class="contact-copy"><p class="eyebrow">Kết nối với 48 Trần Phú</p><h2 id="contact-title"><?php echo tp48_detail_text('contact_heading'); ?></h2><p><?php echo tp48_detail_text('contact_intro'); ?></p><p class="fine-print">Kênh liên hệ tiếp nhận nhu cầu tìm hiểu thông tin dự án.</p></div>
 <div class="contact-panel">
 <?php $messages=['success'=>'Cảm ơn bạn. Yêu cầu nhận cập nhật đã được ghi nhận.','invalid'=>'Vui lòng kiểm tra họ tên, email và số điện thoại (nếu có).','consent'=>'Vui lòng đồng ý nhận liên hệ và cập nhật trước khi gửi.','expired'=>'Phiên gửi đã hết hạn. Vui lòng tải lại trang và thử lại.','wait'=>'Bạn vừa gửi yêu cầu. Vui lòng chờ một phút trước khi gửi lại.','error'=>'Chưa thể ghi nhận yêu cầu. Vui lòng thử lại.']; $status=isset($_GET['contact']) && is_string($_GET['contact']) ? sanitize_key($_GET['contact']) : ''; if (isset($messages[$status])): ?><p class="form-status" role="status"><?php echo esc_html($messages[$status]); ?></p><?php endif; ?>
 <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" class="contact-form">

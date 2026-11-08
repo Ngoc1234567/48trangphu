@@ -1,0 +1,13 @@
+.project-footer{padding:44px 7% 0;background:var(--deep);color:var(--cream);border-top:1px solid var(--line)}
+.project-footer-main{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-bottom:32px}
+.project-footer-brand{font-family:var(--serif);font-size:26px;color:var(--gold);line-height:1.4}
+.project-footer-brand span{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.3em;margin-top:6px}
+.project-footer p{font-size:13px;line-height:1.7;margin:18px 0 0}
+.project-footer-social{display:flex;flex-wrap:wrap;gap:12px}
+.project-footer-social a{width:46px;height:46px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--gold);background:rgba(230,213,166,.04);transition:background .2s,transform .2s,color .2s}
+.project-footer-social svg{width:21px;height:21px;display:block}
+.project-footer-social a:hover{background:var(--gold);color:var(--deep);transform:translateY(-2px)}
+.project-footer-social a:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+.project-footer-bottom{display:flex;flex-wrap:wrap;gap:24px;border-top:1px solid var(--line);padding:22px 0;font-size:11px}
+@media(max-width:700px){.project-footer{padding:32px 24px 0}.project-footer-main{flex-direction:column;align-items:flex-start;gap:24px;padding-bottom:28px}.project-footer-brand{font-size:24px}}
+@media(prefers-reduced-motion:reduce){.project-footer-social a{transition:none}}

@@ -76,6 +76,29 @@ html{scroll-padding-top:12px}body{font-size:13px}.site-header{padding:17px 22px;
 .contact.is-phone-hidden .contact-form{grid-template-columns:1fr 1fr 1.15fr}
 @media(max-width:700px){.pillar-icon{width:31px;height:31px;flex-shrink:0}.brand .home-logo{max-width:190px;max-height:48px}}
 
+/* Match the supplied landscape and portrait compositions without cropping landmarks. */
+.hero-figure{margin:0}
+.hero.hero-concept{height:auto;min-height:0;aspect-ratio:16/9;position:relative}
+.hero-concept .hero-image{object-fit:contain;object-position:center}
+.hero-concept:before{background:linear-gradient(180deg,rgba(0,25,47,.45),transparent 22%)}
+.hero-concept .hero-content{top:24%;right:4%;left:auto;width:53%;text-align:center}
+.hero-concept #hero-title{font-family:var(--serif);font-size:clamp(22px,3vw,58px);line-height:1.35;font-weight:400;color:#fff;letter-spacing:.025em}
+.hero-concept .hero-title-line,.hero-concept .hero-city,.hero-concept .hero-title-separator{display:inline;font-size:inherit;line-height:inherit;letter-spacing:inherit;white-space:normal;overflow-wrap:normal}
+.hero-caption{margin:0;padding:12px 20px;background:#062639;color:#f4ecd9;text-align:center;font-size:13px;line-height:1.6}
+.hero-concept .hero-subtitle{font-family:inherit;font-style:normal;font-size:clamp(12px,1.3vw,20px);line-height:1.5;margin-top:12px;color:#fff;letter-spacing:0}
+.hero-concept .outline{margin-top:18px}
+.home-section-anchor{position:absolute;top:0;left:0;scroll-margin-top:24px}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media(max-width:700px){
+ .hero.hero-concept{height:auto;aspect-ratio:9/16}
+ .hero-concept .hero-content{top:17%;left:5%;right:5%;width:auto}
+ .hero-concept #hero-title{font-size:clamp(18px,4.9vw,34px)}
+ .hero-caption{padding:10px 18px;font-size:12px}
+ .hero-concept .hero-content{top:12%}
+ .hero-concept .hero-subtitle{font-size:12px;margin-top:8px}
+ .hero-concept .outline{margin-top:12px;font-size:11px;min-height:36px;padding:8px 16px}
+}
 .tp48-home-without-leading-hero .site-header{position:relative;background:var(--navy);border-bottom:1px solid var(--line)}
 
 

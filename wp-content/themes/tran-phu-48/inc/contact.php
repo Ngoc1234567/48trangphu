@@ -27,7 +27,8 @@ function tp48_contact() {
         update_post_meta($id,'_tp48_consent_version','2026-11-03');
     }
     set_transient($rate_key,1,MINUTE_IN_SECONDS);
-    $override=$home_id ? tp48_home_field('contact','recipient',$home_id):'';
+    $contact_page=get_page_by_path('lien-he');
+    $override=$home_id ? tp48_home_field('contact','recipient',$home_id):($contact_page ? tp48_detail_field('contact_recipient',$contact_page->ID):'');
     $recipient=is_string($override) && is_email($override) ? $override:sanitize_email(tp48_text('email',get_option('admin_email')));
     $sent=wp_mail($recipient,'Yêu cầu nhận cập nhật — 48 Trần Phú',"Họ và tên: $name\nEmail: $email\nSố điện thoại: $phone\n$consent_note\nXem yêu cầu: ".admin_url('post.php?post='.$id.'&action=edit'));
     update_post_meta($id,'_tp48_mail_sent',$sent ? '1':'0');

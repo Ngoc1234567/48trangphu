@@ -16,6 +16,8 @@ add_action('customize_register',function ($c) {
         $c->add_control('tp48_'.$key,['label'=>$field[0],'type'=>$field[1],'section'=>'tp48_contact']);
     }
     $c->add_section('tp48_tracking',['title'=>'48 Trần Phú — Đo lường','description'=>'Chỉ bật trên website chính thức. Không chèn lại GA4 bằng plugin khác khi dùng mục này.','priority'=>32]);
+    $c->add_setting('tp48_facebook',['sanitize_callback'=>'esc_url_raw']);
+    $c->add_control('tp48_facebook',['label'=>'Liên kết Facebook (để trống để ẩn icon)','type'=>'url','section'=>'tp48_contact']);
     $c->add_setting('tp48_ga4',['sanitize_callback'=>function ($v) { return preg_match('/^G-[A-Z0-9]+$/',trim($v)) ? trim($v) : ''; }]);
     $c->add_control('tp48_ga4',['label'=>'GA4 Measurement ID (G-...)','section'=>'tp48_tracking']);
     $c->add_setting('tp48_gsc',['sanitize_callback'=>function ($v) { return preg_replace('/[^a-zA-Z0-9_-]/','',$v); }]);

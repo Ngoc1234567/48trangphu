@@ -156,7 +156,8 @@
                         "id": ""
                     },
                     "choices": {
-                        "3": "48 Trần Phú — Menu chính"
+                        "3": "48 Trần Phú — Menu chính",
+                        "6": "48 Trần Phú — Trang chủ"
                     },
                     "allow_null": 1,
                     "ui": 1,
@@ -402,7 +403,7 @@
                     "name": "headline",
                     "aria-label": "",
                     "type": "text",
-                    "instructions": "",
+                    "instructions": "Trường bố cục cũ, không hiển thị trong banner hiện tại. Dùng Dòng mô tả dưới tiêu đề.",
                     "required": false,
                     "conditional_logic": false,
                     "wrapper": {
@@ -418,11 +419,11 @@
                 },
                 {
                     "key": "field_tp48_home_hero_subtitle",
-                    "label": "Phụ đề",
+                    "label": "Dòng mô tả dưới tiêu đề",
                     "name": "subtitle",
                     "aria-label": "",
                     "type": "text",
-                    "instructions": "",
+                    "instructions": "Ví dụ: Thông tin dự án, vị trí và tiến độ công trình",
                     "required": false,
                     "conditional_logic": false,
                     "wrapper": {
@@ -451,6 +452,26 @@
                         "id": ""
                     },
                     "return_format": "array"
+                },
+                {
+                    "key": "field_tp48_home_hero_caption",
+                    "label": "Chú thích ngay dưới ảnh",
+                    "name": "caption",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "rows": 2,
+                    "default_value": "Hình ảnh minh họa ý tưởng, không phải phối cảnh chính thức của dự án.",
+                    "new_lines": "",
+                    "maxlength": "",
+                    "placeholder": ""
                 }
             ]
         },
@@ -2301,5 +2322,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1793722025
+    "modified": 1794123247
 }

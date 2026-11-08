@@ -1,4 +1,4 @@
-﻿# Website 48 Trần Phú
+# Website 48 Trần Phú
 
 Theme WordPress cho website thông tin dự án tại 48 Trần Phú, Nha Trang, triển khai theo tài liệu hướng dẫn thiết kế được cung cấp ngày 03/11/2026. Giao diện xanh biển/vàng champagne, ưu tiên điện thoại; không đưa thông số hoặc hình ảnh sản phẩm chưa được xác minh lên website.
 
@@ -65,6 +65,6 @@ Theme nằm ở `wp-content/themes/tran-phu-48`, phần chức năng tách trong
 
 ## Trang chủ giữ giao diện cũ
 
-Theo yêu cầu cập nhật, trang chủ sử dụng lại bố cục trước khi triển khai tài liệu thiết kế: banner 48 Trần Phú, bốn biểu tượng, Vị trí, Dấu ấn Nha Trang, Hình ảnh, Nhật ký công trình và form cuối trang. Giao diện riêng ở `assets/home-classic.css`, các phần ở `template-parts/home-classic/`. Những trang chi tiết tiếp tục dùng giao diện mới và menu chính tám mục; trang chủ giữ thanh điều hướng theo bố cục cũ.
+Theo yêu cầu cập nhật, trang chủ sử dụng lại bố cục trước khi triển khai tài liệu thiết kế: banner 48 Trần Phú, bốn biểu tượng, Vị trí, Dấu ấn Nha Trang, Hình ảnh, Nhật ký công trình và form cuối trang. Giao diện riêng ở `assets/home-classic.css`, các phần ở `template-parts/home-classic/`. Trang chủ và các trang chi tiết dùng chung Menu chính tại Giao diện → Menu, gồm tám mục: Trang chủ, Tổng quan, Vị trí, Mặt bằng, Tiện ích, Tiến độ, The Journal và Liên hệ.
 
 Sửa tiêu đề/phụ đề banner cũ trong **Giao diện → Tùy biến → 48 Trần Phú — Hình ảnh & nội dung → Trang chủ cũ — Tiêu đề / Phụ đề**. Form trang chủ vẫn yêu cầu đồng ý nhận liên hệ, dùng chung bộ xử lý lưu yêu cầu và chống spam hiện tại.
