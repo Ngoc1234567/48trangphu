@@ -1,4 +1,5 @@
 .single-story>.page-heading h1{text-wrap:balance;line-height:1.18}
+.single-story>.reading-width.article-body{max-width:1060px}
 @media(max-width:700px){.single-story>.page-heading h1{font-size:clamp(30px,8vw,42px)}}
 /* Respect Classic Editor image alignment as well as block editor captions. */
 .entry-content .aligncenter{display:block;margin:1.5em auto;max-width:100%}
