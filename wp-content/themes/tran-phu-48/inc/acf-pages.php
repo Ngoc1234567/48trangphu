@@ -98,12 +98,12 @@ function tp48_interior_field_groups() {
         $field('update_is_demo','Video / nội dung mẫu để duyệt bố cục','true_false',['ui'=>1,'instructions'=>'Bật để hiện nhãn rõ đây là nội dung mẫu, không phải tiến độ thực tế.']),
         $field('update_date','Ngày cập nhật','date_picker',['display_format'=>'d/m/Y','return_format'=>'Y-m-d','instructions'=>'Để trống dùng ngày đăng. Danh sách xếp theo ngày cập nhật mới nhất.']),
         $field('update_image','Ảnh công trình','image'),
-        $field('update_video','Video công trình (MP4 / WebM)','file',['return_format'=>'id','mime_types'=>'mp4,webm','instructions'=>'Khi có cả ảnh và video, video hiển thị trước; ảnh dùng làm ảnh đại diện video.']),
+        $field('update_video','Video công trình (MP4 / WebM)','file',['return_format'=>'id','mime_types'=>'mp4,webm','required'=>0,'instructions'=>'Tải file hoặc nhập URL video bên dưới, chỉ cần một trong hai. Khi có cả ảnh và video, ảnh dùng làm ảnh đại diện video.']),
+        $field('update_video_url','URL video công trình (MP4 / WebM)','url',['required'=>0,'instructions'=>'Nhập liên kết trực tiếp đến video MP4 / WebM (không phải link trang xem YouTube). Có URL thì không cần tải file; có file thì có thể để trống URL. Nếu có cả hai, ưu tiên URL.']),
         $field('update_description','Mô tả ngắn','textarea',['rows'=>4]),
     ],[[['param'=>'post_type','operator'=>'==','value'=>'tp48_journal']]]);
     $contact=$group('contact_page','48 Trần Phú — Liên hệ',[
         $field('contact_heading','Tiêu đề form'),$field('contact_intro','Giới thiệu form','textarea'),
-        $field('contact_recipient','Email nhận thông báo','email',['instructions'=>'Để trống dùng email liên hệ đã cấu hình. Email này không hiển thị ra ngoài website.']),
     ],$page('lien-he'));
     return [$overview,$location,$progress,$information,$update,$contact];
 }

@@ -2137,46 +2137,6 @@
                     "append": ""
                 },
                 {
-                    "key": "field_tp48_home_contact_show_phone",
-                    "label": "Hiển thị trường điện thoại",
-                    "name": "show_phone",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": false,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "ui": 1,
-                    "default_value": 1,
-                    "message": "",
-                    "ui_on_text": "",
-                    "ui_off_text": ""
-                },
-                {
-                    "key": "field_tp48_home_contact_phone_required",
-                    "label": "Bắt buộc điện thoại",
-                    "name": "phone_required",
-                    "aria-label": "",
-                    "type": "true_false",
-                    "instructions": "",
-                    "required": false,
-                    "conditional_logic": false,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "ui": 1,
-                    "default_value": 0,
-                    "message": "",
-                    "ui_on_text": "",
-                    "ui_off_text": ""
-                },
-                {
                     "key": "field_tp48_home_contact_button_label",
                     "label": "Chữ trên nút gửi",
                     "name": "button_label",
@@ -2271,25 +2231,6 @@
                     "default_value": "",
                     "maxlength": "",
                     "placeholder": ""
-                },
-                {
-                    "key": "field_tp48_home_contact_recipient",
-                    "label": "Email nhận thông báo",
-                    "name": "recipient",
-                    "aria-label": "",
-                    "type": "email",
-                    "instructions": "Để trống để dùng email nhận yêu cầu tại Giao diện → Tùy biến → Liên hệ. Nonce, chống spam và đồng ý liên hệ luôn được giữ.",
-                    "required": false,
-                    "conditional_logic": false,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
                 }
             ]
         }

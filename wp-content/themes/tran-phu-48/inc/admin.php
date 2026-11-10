@@ -12,10 +12,12 @@ add_action('customize_register',function ($c) {
     }
     $c->add_section('tp48_contact',['title'=>'48 Trần Phú — Liên hệ','priority'=>31]);
     foreach (['phone'=>['Số điện thoại / Zalo','text','sanitize_text_field'],'email'=>['Email nhận yêu cầu','email','sanitize_email']] as $key=>$field) {
-        $c->add_setting('tp48_'.$key,['sanitize_callback'=>$field[2]]);
+        $c->add_setting('tp48_'.$key,['default'=>$key==='phone' ? '0906126393':'tranduyhung.man@gmail.com','sanitize_callback'=>$field[2]]);
         $c->add_control('tp48_'.$key,['label'=>$field[0],'type'=>$field[1],'section'=>'tp48_contact']);
     }
     $c->add_section('tp48_tracking',['title'=>'48 Trần Phú — Đo lường','description'=>'Chỉ bật trên website chính thức. Không chèn lại GA4 bằng plugin khác khi dùng mục này.','priority'=>32]);
+    $c->add_setting('tp48_messenger',['sanitize_callback'=>'esc_url_raw']);
+    $c->add_control('tp48_messenger',['label'=>'Liên kết Messenger','description'=>'Nhập link https://m.me/ten-fanpage. Để trống để ẩn nút khi chưa có fanpage.','type'=>'url','section'=>'tp48_contact']);
     $c->add_setting('tp48_facebook',['sanitize_callback'=>'esc_url_raw']);
     $c->add_control('tp48_facebook',['label'=>'Liên kết Facebook (để trống để ẩn icon)','type'=>'url','section'=>'tp48_contact']);
     $c->add_setting('tp48_ga4',['sanitize_callback'=>function ($v) { return preg_match('/^G-[A-Z0-9]+$/',trim($v)) ? trim($v) : ''; }]);

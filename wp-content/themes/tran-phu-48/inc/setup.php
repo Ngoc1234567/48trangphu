@@ -50,7 +50,15 @@ function tp48_page_content() {
         else { tp48_placeholder(); }
     }
 }
-function tp48_phone() { return preg_replace('/[^+0-9]/','',tp48_text('phone')); }
+// Apply the owner's contact details once; later edits remain available in Customizer.
+add_action('init',function () {
+    if (get_option('tp48_contact_details_v1')) return;
+    set_theme_mod('tp48_phone','0906126393');
+    set_theme_mod('tp48_email','tranduyhung.man@gmail.com');
+    update_option('tp48_contact_details_v1',1);
+});
+function tp48_phone() { return preg_replace('/[^+0-9]/','',tp48_text('phone','0906126393')); }
+function tp48_messenger() { return esc_url_raw(tp48_text('messenger'),['https','http']); }
 function tp48_zalo() {
     $phone=tp48_phone();
     return $phone ? 'https://zalo.me/'.preg_replace('/^0/','84',$phone) : '';

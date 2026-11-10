@@ -13,7 +13,6 @@ function tp48_contact() {
     $email=sanitize_email(tp48_post_value('email'));
     $phone=sanitize_text_field(tp48_post_value('phone'));
     if (!$name || mb_strlen($name)>100 || !is_email($email) || strlen($email)>254 || ($phone && !preg_match('/^[+0-9 ().-]{8,20}$/',$phone))) $finish('invalid');
-    if ($home_id && tp48_home_field('contact','show_phone',$home_id) && tp48_home_field('contact','phone_required',$home_id) && !$phone) $finish('invalid');
     $consented=tp48_post_value('consent')==='1';
     if (!$home_id && !$consented) $finish('consent');
     $consent_note=$consented ? 'Đồng ý nhận liên hệ và cập nhật: Có' : 'Khách gửi yêu cầu nhận thông tin qua form trang chủ; không thu thập xác nhận đồng ý nhận cập nhật.';
@@ -27,12 +26,10 @@ function tp48_contact() {
         update_post_meta($id,'_tp48_consent_version','2026-11-03');
     }
     set_transient($rate_key,1,MINUTE_IN_SECONDS);
-    $contact_page=get_page_by_path('lien-he');
-    $override=$home_id ? tp48_home_field('contact','recipient',$home_id):($contact_page ? tp48_detail_field('contact_recipient',$contact_page->ID):'');
-    $recipient=is_string($override) && is_email($override) ? $override:sanitize_email(tp48_text('email',get_option('admin_email')));
+    $recipient=sanitize_email(tp48_text('email','tranduyhung.man@gmail.com'));
     $sent=wp_mail($recipient,'Yêu cầu nhận cập nhật — 48 Trần Phú',"Họ và tên: $name\nEmail: $email\nSố điện thoại: $phone\n$consent_note\nXem yêu cầu: ".admin_url('post.php?post='.$id.'&action=edit'));
     update_post_meta($id,'_tp48_mail_sent',$sent ? '1':'0');
-    $finish('success');
+    $finish($sent ? 'success':'saved');
 }
 add_action('admin_post_tp48_contact','tp48_contact');
 add_action('admin_post_nopriv_tp48_contact','tp48_contact');
