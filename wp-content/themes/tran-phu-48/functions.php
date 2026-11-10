@@ -4,6 +4,7 @@ require_once __DIR__ . '/inc/setup.php';
 require_once __DIR__ . '/inc/acf-home.php';
 require_once __DIR__ . '/inc/acf-pages.php';
 require_once __DIR__ . '/inc/contact.php';
+require_once __DIR__ . '/inc/contact-cf7.php';
 require_once __DIR__ . '/inc/admin.php';
 require_once __DIR__ . '/inc/seo.php';
 function tp48_icon($name) {

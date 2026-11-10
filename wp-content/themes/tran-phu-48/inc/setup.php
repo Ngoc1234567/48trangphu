@@ -16,6 +16,7 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_style('tp48', get_template_directory_uri().$css, [], filemtime(get_template_directory().$css));
     wp_enqueue_style('tp48-footer', get_template_directory_uri().'/assets/footer.css', ['tp48'], filemtime(get_template_directory().'/assets/footer.css'));
     if (!$classic) wp_enqueue_style('tp48-interior', get_template_directory_uri().'/assets/interior-pages.css', ['tp48'], filemtime(get_template_directory().'/assets/interior-pages.css'));
+    wp_enqueue_style('tp48-contact', get_template_directory_uri().'/assets/contact.css', ['tp48'], filemtime(get_template_directory().'/assets/contact.css'));
     wp_enqueue_script('tp48', get_template_directory_uri().'/assets/site.js', [], filemtime(get_template_directory().'/assets/site.js'), true);
 });
 function tp48_text($key, $default = '') { return get_theme_mod('tp48_'.$key, $default); }
