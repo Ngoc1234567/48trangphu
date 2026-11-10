@@ -12,6 +12,9 @@
 /* Imported Classic Editor captions can be a colored span immediately after the image. */
 .entry-content p.western>img.aligncenter{margin-bottom:.65em}
 .entry-content p.western>img.aligncenter+span[style*="color"]{display:block;color:var(--muted)!important;font-size:13px;line-height:1.7;text-align:center}
+/* Classic Editor also stores captions as a separate centered paragraph. */
+.entry-content p:has(>img.aligncenter)+p:is([align="center"],[style*="text-align: center"],[style*="text-align:center"]){color:var(--muted);font-size:13px;line-height:1.7;text-align:center}
+.entry-content p:has(>img.aligncenter)+p:is([align="center"],[style*="text-align: center"],[style*="text-align:center"]) [style*="color"]{color:var(--muted)!important}
 @media(max-width:700px){.entry-content .alignleft,.entry-content .alignright{float:none;display:block;margin:1.5em auto}}
 .overview-cover{margin:0}
 .overview-facts{padding:22px 0;margin-bottom:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
