@@ -4,6 +4,8 @@
         <nav class="project-footer-social" aria-label="Kết nối với dự án">
             <?php if (tp48_phone()): ?>
             <a href="tel:<?php echo esc_attr(tp48_phone()); ?>" aria-label="Gọi điện" title="Gọi điện"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 3 3 5-2 2c1 3 3 5 6 6l2-2 5 3-1 3c-1 3-7 0-11-4S2 6 4 4Z"/></svg></a>
+            <?php endif; ?>
+            <?php if (tp48_zalo()): ?>
             <a href="<?php echo esc_url(tp48_zalo()); ?>" target="_blank" rel="noopener noreferrer" aria-label="Chat Zalo (mở tab mới)" title="Zalo"><span>Zalo</span></a>
             <?php endif; ?>
             <?php if (tp48_text('facebook')): ?><a href="<?php echo esc_url(tp48_text('facebook')); ?>" target="_blank" rel="noopener noreferrer" aria-label="Facebook (mở tab mới)" title="Facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 22v-9h3l.5-4H14V7c0-1 .3-2 2-2h2V1.5L15 1c-3 0-5 2-5 5v3H7v4h3v9Z"/></svg></a><?php endif; ?>

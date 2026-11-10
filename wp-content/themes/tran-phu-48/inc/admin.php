@@ -11,10 +11,29 @@ add_action('customize_register',function ($c) {
         $c->add_control('tp48_'.$key,['label'=>$field[0],'section'=>'tp48_home','type'=>'textarea']);
     }
     $c->add_section('tp48_contact',['title'=>'48 Trần Phú — Liên hệ','priority'=>31]);
-    foreach (['phone'=>['Số điện thoại / Zalo','text','sanitize_text_field'],'email'=>['Email nhận yêu cầu','email','sanitize_email']] as $key=>$field) {
-        $c->add_setting('tp48_'.$key,['default'=>$key==='phone' ? '0906126393':'tranduyhung.man@gmail.com','sanitize_callback'=>$field[2]]);
-        $c->add_control('tp48_'.$key,['label'=>$field[0],'type'=>$field[1],'section'=>'tp48_contact']);
-    }
+    $c->add_setting('tp48_phone',['default'=>'','sanitize_callback'=>'sanitize_text_field']);
+    $c->add_control('tp48_phone',['label'=>'Số điện thoại','description'=>'Để trống để ẩn nút gọi điện.','type'=>'text','section'=>'tp48_contact']);
+    $c->add_setting('tp48_zalo',['default'=>'','sanitize_callback'=>'esc_url_raw']);
+    $c->add_control('tp48_zalo',[
+        'label'=>'Liên kết Zalo',
+        'description'=>'Nhập link Zalo cá nhân hoặc Zalo OA nếu dùng riêng. Để trống sẽ dùng số điện thoại ở trên; nếu cả hai trống thì ẩn nút Zalo.',
+        'type'=>'url','section'=>'tp48_contact',
+    ]);
+    $c->add_setting('tp48_email',[
+        'default'=>'',
+        'sanitize_callback'=>'sanitize_email',
+        'validate_callback'=>function ($validity,$value) {
+            if (trim((string)$value)!=='' && !is_email(trim((string)$value))) {
+                $validity->add('invalid_email','Vui lòng nhập địa chỉ email hợp lệ.');
+            }
+            return $validity;
+        },
+    ]);
+    $c->add_control('tp48_email',[
+        'label'=>'Email nhận đăng ký (Trang chủ và Liên hệ)',
+        'description'=>'Đổi tại đây rồi bấm Đăng để áp dụng cho cả hai form. Để trống dùng email quản trị trong Cài đặt → Tổng quan: '.get_option('admin_email'),
+        'type'=>'email','section'=>'tp48_contact',
+    ]);
     $c->add_section('tp48_tracking',['title'=>'48 Trần Phú — Đo lường','description'=>'Chỉ bật trên website chính thức. Không chèn lại GA4 bằng plugin khác khi dùng mục này.','priority'=>32]);
     $c->add_setting('tp48_messenger',['sanitize_callback'=>'esc_url_raw']);
     $c->add_control('tp48_messenger',['label'=>'Liên kết Messenger','description'=>'Nhập link https://m.me/ten-fanpage. Để trống để ẩn nút khi chưa có fanpage.','type'=>'url','section'=>'tp48_contact']);

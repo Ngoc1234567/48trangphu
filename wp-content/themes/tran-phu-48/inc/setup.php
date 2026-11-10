@@ -50,23 +50,12 @@ function tp48_page_content() {
         else { tp48_placeholder(); }
     }
 }
-// Apply the owner's contact details once; later edits remain available in Customizer.
-add_action('init',function () {
-    if (get_option('tp48_contact_details_v1')) return;
-    set_theme_mod('tp48_phone','0906126393');
-    set_theme_mod('tp48_email','tranduyhung.man@gmail.com');
-    update_option('tp48_contact_details_v1',1);
-});
-add_action('init',function () {
-    if (get_option('tp48_social_links_v1')) return;
-    set_theme_mod('tp48_messenger','https://m.me/48tranphu.NhaTrang79');
-    set_theme_mod('tp48_facebook','https://www.facebook.com/48tranphu.NhaTrang79');
-    update_option('tp48_social_links_v1',1);
-});
-function tp48_phone() { return preg_replace('/[^+0-9]/','',tp48_text('phone','0906126393')); }
+function tp48_phone() { return preg_replace('/[^+0-9]/','',tp48_text('phone')); }
 function tp48_messenger() { return esc_url_raw(tp48_text('messenger'),['https','http']); }
 function tp48_zalo() {
-    $phone=tp48_phone();
+    $url=esc_url_raw(tp48_text('zalo'),['https','http']);
+    if ($url) return $url;
+    $phone=ltrim(tp48_phone(),'+');
     return $phone ? 'https://zalo.me/'.preg_replace('/^0/','84',$phone) : '';
 }
 function tp48_cards($type='post', $limit=3, $pagination=false) {

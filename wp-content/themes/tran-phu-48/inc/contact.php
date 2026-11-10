@@ -1,6 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit;
 function tp48_post_value($key) { return isset($_POST[$key]) && is_string($_POST[$key]) ? wp_unslash($_POST[$key]) : ''; }
+function tp48_contact_recipient() {
+    $email=trim((string)tp48_text('email'));
+    return is_email($email) ? $email:sanitize_email(get_option('admin_email'));
+}
 function tp48_contact() {
     $back=wp_validate_redirect(esc_url_raw(tp48_post_value('return_url')),tp48_page_url('lien-he'));
     $finish=function ($state) use ($back) { wp_safe_redirect(add_query_arg('contact',$state,$back).'#kham-pha',303); exit; };
@@ -26,7 +30,7 @@ function tp48_contact() {
         update_post_meta($id,'_tp48_consent_version','2026-11-03');
     }
     set_transient($rate_key,1,MINUTE_IN_SECONDS);
-    $recipient=sanitize_email(tp48_text('email','tranduyhung.man@gmail.com'));
+    $recipient=tp48_contact_recipient();
     $sent=wp_mail($recipient,'Yêu cầu nhận cập nhật — 48 Trần Phú',"Họ và tên: $name\nEmail: $email\nSố điện thoại: $phone\n$consent_note\nXem yêu cầu: ".admin_url('post.php?post='.$id.'&action=edit'));
     update_post_meta($id,'_tp48_mail_sent',$sent ? '1':'0');
     $finish($sent ? 'success':'saved');
