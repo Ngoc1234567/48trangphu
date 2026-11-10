@@ -1,3 +1,5 @@
+.single-story>.page-heading h1{text-wrap:balance;line-height:1.18}
+@media(max-width:700px){.single-story>.page-heading h1{font-size:clamp(30px,8vw,42px)}}
 .overview-cover{margin:0}
 .overview-facts{padding:22px 0;margin-bottom:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .overview-facts h3{font-size:23px;margin-bottom:12px}
