@@ -41,6 +41,24 @@ function tp48_detail_field($name,$id=0) {
 }
 function tp48_detail_text($name,$id=0) { return esc_html((string)tp48_detail_field($name,$id)); }
 function tp48_detail_body($name,$id=0) { echo wp_kses_post(wpautop((string)tp48_detail_field($name,$id))); }
+function tp48_progress_youtube_embed($url) {
+    $parts=wp_parse_url($url);
+    if (!$parts || !in_array(strtolower($parts['scheme'] ?? ''),['http','https'],true)) return '';
+    $host=strtolower($parts['host'] ?? '');
+    $path=trim($parts['path'] ?? '','/');
+    $id='';
+    if (in_array($host,['youtu.be','www.youtu.be'],true)) {
+        $id=$path;
+    } elseif (in_array($host,['youtube.com','www.youtube.com','m.youtube.com','youtube-nocookie.com','www.youtube-nocookie.com'],true)) {
+        if ($path==='watch') {
+            parse_str($parts['query'] ?? '',$query);
+            $id=$query['v'] ?? '';
+        } elseif (preg_match('~^(?:shorts|embed|live)/([A-Za-z0-9_-]{11})$~',$path,$matches)) {
+            $id=$matches[1];
+        }
+    }
+    return is_string($id) && preg_match('/^[A-Za-z0-9_-]{11}$/',$id) ? 'https://www.youtube.com/embed/'.$id.'?playsinline=1' : '';
+}
 function tp48_progress_date($id=0,$format='d.m.Y') {
     $id=$id ?: get_the_ID();
     $date=tp48_detail_field('update_date',$id);
@@ -99,7 +117,7 @@ function tp48_interior_field_groups() {
         $field('update_date','Ngày cập nhật','date_picker',['display_format'=>'d/m/Y','return_format'=>'Y-m-d','instructions'=>'Để trống dùng ngày đăng. Danh sách xếp theo ngày cập nhật mới nhất.']),
         $field('update_image','Ảnh công trình','image'),
         $field('update_video','Video công trình (MP4 / WebM)','file',['return_format'=>'id','mime_types'=>'mp4,webm','required'=>0,'instructions'=>'Tải file hoặc nhập URL video bên dưới, chỉ cần một trong hai. Khi có cả ảnh và video, ảnh dùng làm ảnh đại diện video.']),
-        $field('update_video_url','URL video công trình (MP4 / WebM)','url',['required'=>0,'instructions'=>'Nhập liên kết trực tiếp đến video MP4 / WebM (không phải link trang xem YouTube). Có URL thì không cần tải file; có file thì có thể để trống URL. Nếu có cả hai, ưu tiên URL.']),
+        $field('update_video_url','URL video công trình (YouTube / MP4 / WebM)','url',['required'=>0,'instructions'=>'Nhập link YouTube (bao gồm Shorts, youtu.be) hoặc liên kết trực tiếp đến video MP4 / WebM. Có URL thì không cần tải file; có file thì có thể để trống URL. Nếu có cả hai, ưu tiên URL.']),
         $field('update_description','Mô tả ngắn','textarea',['rows'=>4]),
     ],[[['param'=>'post_type','operator'=>'==','value'=>'tp48_journal']]]);
     $contact=$group('contact_page','48 Trần Phú — Liên hệ',[
