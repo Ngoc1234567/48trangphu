@@ -1,5 +1,17 @@
 .single-story>.page-heading h1{text-wrap:balance;line-height:1.18}
 @media(max-width:700px){.single-story>.page-heading h1{font-size:clamp(30px,8vw,42px)}}
+/* Respect Classic Editor image alignment as well as block editor captions. */
+.entry-content .aligncenter{display:block;margin:1.5em auto;max-width:100%}
+.entry-content .alignleft{float:left;margin:0 1.5em 1em 0;max-width:100%}
+.entry-content .alignright{float:right;margin:0 0 1em 1.5em;max-width:100%}
+.entry-content::after{content:"";display:block;clear:both}
+.entry-content .wp-caption{max-width:100%}
+.entry-content .wp-caption img{display:block;margin:0 auto;height:auto}
+.entry-content .wp-caption-text,.entry-content figcaption{margin:.65em 0 1.5em;color:var(--muted);font-size:13px;line-height:1.7;text-align:center}
+/* Imported Classic Editor captions can be a colored span immediately after the image. */
+.entry-content p.western>img.aligncenter{margin-bottom:.65em}
+.entry-content p.western>img.aligncenter+span[style*="color"]{display:block;color:var(--muted)!important;font-size:13px;line-height:1.7;text-align:center}
+@media(max-width:700px){.entry-content .alignleft,.entry-content .alignright{float:none;display:block;margin:1.5em auto}}
 .overview-cover{margin:0}
 .overview-facts{padding:22px 0;margin-bottom:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .overview-facts h3{font-size:23px;margin-bottom:12px}
