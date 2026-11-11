@@ -1,5 +1,36 @@
 (() => {
 'use strict';
+// Animate each homepage section once as it enters the viewport.
+// Content stays visible if JavaScript or IntersectionObserver is unavailable.
+const home=document.querySelector('.home-page');
+if(home && 'IntersectionObserver' in window){
+ const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
+ const blocks=[...home.querySelectorAll(':scope > section:not(.hero), :scope > .pillars')];
+ const seen=new WeakSet();
+ const reveal=block=>{
+  if(seen.has(block))return;
+  seen.add(block);observer.unobserve(block);
+  if(!reducedMotion.matches && !block.contains(document.activeElement)){
+   block.classList.add('home-block-reveal');
+   block.addEventListener('animationend',event=>{if(event.target===block)block.classList.remove('home-block-reveal');});
+  }
+ };
+ const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{if(entry.isIntersecting)reveal(entry.target);});
+ },{rootMargin:'0px 0px -32px 0px',threshold:0});
+ const syncMotion=()=>{
+  observer.disconnect();
+  blocks.forEach(block=>{
+   block.classList.remove('home-block-reveal');
+   if(!reducedMotion.matches && !seen.has(block))observer.observe(block);
+  });
+ };
+ home.addEventListener('focusin',event=>{
+  const block=blocks.find(item=>item.contains(event.target));
+  if(block){seen.add(block);observer.unobserve(block);block.classList.remove('home-block-reveal');}
+ });
+ reducedMotion.addEventListener('change',syncMotion);syncMotion();
+}
 const toggle=document.querySelector('.menu-toggle');
 const nav=document.querySelector('#main-nav');
 const closeMenu=()=>{toggle?.setAttribute('aria-expanded','false');toggle?.setAttribute('aria-label','Mở menu');nav?.classList.remove('is-open');};
@@ -40,6 +71,15 @@ if(dialog&&photos.length){
  dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
  dialog.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){e.preventDefault();show(current-1);}if(e.key==='ArrowRight'){e.preventDefault();show(current+1);}});
 }
+// Add a web-only credit to the two archival photos; original media files stay intact.
+document.querySelectorAll('.single-story .entry-content img').forEach(img=>{
+ const path=new URL(img.getAttribute('src')||'',document.baseURI).pathname;
+ if(!/\/IMG_310[35](?:-\d+x\d+|-scaled)?\.jpe?g$/i.test(path)||img.closest('.photo-credit'))return;
+ const frame=document.createElement('span');frame.className='photo-credit';
+ ['aligncenter','alignleft','alignright'].forEach(name=>{if(img.classList.contains(name)){frame.classList.add(name);img.classList.remove(name);}});
+ img.replaceWith(frame);frame.append(img);
+ const credit=document.createElement('span');credit.className='photo-credit-label';credit.textContent='48tranphu.vn';credit.setAttribute('aria-hidden','true');frame.append(credit);
+});
 const video=document.querySelector('.hero-video');const videoToggle=document.querySelector('.video-toggle');
 if(video&&videoToggle){
  const motion=matchMedia('(prefers-reduced-motion: reduce)');

@@ -2,7 +2,7 @@
 /* Template Name: Trang chủ */
 if (!defined('ABSPATH')) exit;
 get_header(); ?>
-<main id="main">
+<main id="main" class="home-page">
 <?php
 $sections=tp48_home_sections();
 if (!in_array('hero',$sections,true)) echo '<h1 class="sr-only">'.esc_html(get_the_title()).'</h1>';

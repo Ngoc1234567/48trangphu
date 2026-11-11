@@ -10,11 +10,11 @@
 .entry-content .wp-caption img{display:block;margin:0 auto;height:auto}
 .entry-content .wp-caption-text,.entry-content figcaption{margin:.65em 0 1.5em;color:var(--muted);font-size:13px;line-height:1.7;text-align:center}
 /* Imported Classic Editor captions can be a colored span immediately after the image. */
-.entry-content p.western>img.aligncenter{margin-bottom:.65em}
-.entry-content p.western>img.aligncenter+span[style*="color"]{display:block;color:var(--muted)!important;font-size:13px;line-height:1.7;text-align:center}
+.entry-content p.western>:is(img,.photo-credit).aligncenter{margin-bottom:.65em}
+.entry-content p.western>:is(img,.photo-credit).aligncenter+span[style*="color"]{display:block;color:var(--muted)!important;font-size:13px;line-height:1.7;text-align:center}
 /* Classic Editor also stores captions as a separate centered paragraph. */
-.entry-content p:has(>img.aligncenter)+p:is([align="center"],[style*="text-align: center"],[style*="text-align:center"]){color:var(--muted);font-size:13px;line-height:1.7;text-align:center}
-.entry-content p:has(>img.aligncenter)+p:is([align="center"],[style*="text-align: center"],[style*="text-align:center"]) [style*="color"]{color:var(--muted)!important}
+.entry-content p:has(>:is(img,.photo-credit).aligncenter)+p:is([align="center"],[style*="text-align: center"],[style*="text-align:center"]){color:var(--muted);font-size:13px;line-height:1.7;text-align:center}
+.entry-content p:has(>:is(img,.photo-credit).aligncenter)+p:is([align="center"],[style*="text-align: center"],[style*="text-align:center"]) [style*="color"]{color:var(--muted)!important}
 @media(max-width:700px){.entry-content .alignleft,.entry-content .alignright{float:none;display:block;margin:1.5em auto}}
 .overview-cover{margin:0}
 .overview-facts{padding:22px 0;margin-bottom:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -61,3 +61,9 @@
 .progress-summary{line-height:1.8;margin-bottom:20px;max-width:760px}
 .progress-preview .eyebrow{margin-top:20px}
 @media(max-width:700px){.landmark-grid{grid-template-columns:1fr;gap:16px}.location-map{height:360px}.progress-update{grid-template-columns:1fr;gap:12px}.progress-media-empty{min-height:190px}}
+
+/* Web-only photo credit, positioned inside the actual image bounds. */
+.entry-content .photo-credit{position:relative;display:block;width:fit-content;max-width:100%;line-height:0}
+.entry-content .photo-credit>img{display:block;max-width:100%;height:auto;margin:0}
+.entry-content .photo-credit-label{position:absolute;right:10px;bottom:10px;padding:3px 6px;border-radius:2px;background:rgba(0,0,0,.35);color:#fff;font:500 12px/1.4 var(--sans);letter-spacing:.02em;text-shadow:0 1px 2px #000;pointer-events:none;user-select:none}
+@media(max-width:700px){.entry-content .photo-credit-label{right:7px;bottom:7px;font-size:10px}}
