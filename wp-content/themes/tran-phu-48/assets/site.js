@@ -7,9 +7,11 @@ if(home && 'IntersectionObserver' in window){
  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
  const blocks=[...home.querySelectorAll(':scope > section:not(.hero), :scope > .pillars')];
  const seen=new WeakSet();
+ blocks.forEach((block,index)=>block.style.setProperty('--home-slide-direction',index%2===0 ? '-1':'1'));
  const reveal=block=>{
   if(seen.has(block))return;
   seen.add(block);observer.unobserve(block);
+  block.classList.remove('home-block-pending');
   if(!reducedMotion.matches && !block.contains(document.activeElement)){
    block.classList.add('home-block-reveal');
    block.addEventListener('animationend',event=>{if(event.target===block)block.classList.remove('home-block-reveal');});
@@ -17,17 +19,21 @@ if(home && 'IntersectionObserver' in window){
  };
  const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{if(entry.isIntersecting)reveal(entry.target);});
- },{rootMargin:'0px 0px -32px 0px',threshold:0});
+ },{rootMargin:'0px',threshold:0});
  const syncMotion=()=>{
   observer.disconnect();
   blocks.forEach(block=>{
-   block.classList.remove('home-block-reveal');
-   if(!reducedMotion.matches && !seen.has(block))observer.observe(block);
+   block.classList.remove('home-block-reveal','home-block-pending');
+   if(reducedMotion.matches || seen.has(block))return;
+   // Leave blocks already on screen in place, including restored scroll positions.
+   if(block.getClientRects().length && block.getBoundingClientRect().top<innerHeight){seen.add(block);return;}
+   block.classList.add('home-block-pending');
+   observer.observe(block);
   });
  };
  home.addEventListener('focusin',event=>{
   const block=blocks.find(item=>item.contains(event.target));
-  if(block){seen.add(block);observer.unobserve(block);block.classList.remove('home-block-reveal');}
+  if(block){seen.add(block);observer.unobserve(block);block.classList.remove('home-block-reveal','home-block-pending');}
  });
  reducedMotion.addEventListener('change',syncMotion);syncMotion();
 }
