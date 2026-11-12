@@ -139,6 +139,16 @@ html{scroll-behavior:smooth}
 .home-page .identity h2{font-size:clamp(14px,3.5vw,36px);white-space:nowrap;text-wrap:nowrap;overflow-wrap:normal}
 .home-page .gallery-item img{object-fit:contain}
 .home-page .gallery-item:hover img{transform:none}
+/* Keep gallery controls clear of the image on phones, including landscape. */
+@media(max-width:700px),(max-height:500px){
+ .lightbox{width:calc(100% - 24px);max-width:none;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:54px 12px 62px;overflow:hidden}
+ .lightbox figure img{width:100%;height:auto;max-height:calc(100vh - 210px);max-height:calc(100dvh - 210px);object-fit:contain}
+ .lightbox figcaption{font-size:14px;line-height:1.5;margin-top:12px;max-height:3em;overflow:auto;overflow-wrap:anywhere}
+ .lightbox button{width:44px;height:44px;padding:0;line-height:1;display:grid;place-items:center}
+ .lightbox-close{right:6px;top:4px}
+ .lightbox-prev{left:calc(50% - 54px);top:auto;bottom:8px}
+ .lightbox-next{right:calc(50% - 54px);top:auto;bottom:8px}
+}
 @media(max-width:700px){
  .home-page .identity{min-height:180px}
  .home-page .identity-copy{max-width:100%;padding:26px 30px}
