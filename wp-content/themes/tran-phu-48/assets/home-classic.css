@@ -135,12 +135,13 @@ html{scroll-behavior:smooth}
 .home-page .identity h2,.home-page .gallery h2,.home-page .journal h2{text-wrap:balance;overflow-wrap:break-word}
 .home-page .identity-copy,.home-page .gallery-copy,.home-page .journal-copy{min-width:0}
 .home-page .identity{height:auto;max-height:none}
+.home-page .identity-copy{max-width:none}
+.home-page .identity h2{font-size:clamp(14px,3.5vw,36px);white-space:nowrap;text-wrap:nowrap;overflow-wrap:normal}
 .home-page .gallery-item img{object-fit:contain}
 .home-page .gallery-item:hover img{transform:none}
 @media(max-width:700px){
  .home-page .identity{min-height:180px}
  .home-page .identity-copy{max-width:100%;padding:26px 30px}
- .home-page .identity h2{font-size:clamp(20px,5.8vw,26px)}
  .home-page .gallery-copy{flex-wrap:wrap;gap:10px 16px;align-items:flex-start}
  .home-page .gallery-copy h2{flex:1 1 200px;font-size:clamp(20px,5.8vw,26px)}
  .home-page .gallery-copy .text-link{font-size:11px;gap:8px;min-height:44px}

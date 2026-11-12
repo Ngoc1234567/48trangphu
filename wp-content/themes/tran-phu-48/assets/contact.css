@@ -7,11 +7,12 @@
 .tp48-acceptance a{color:var(--gold);text-decoration:underline}
 .contact .tp48-acceptance input[type=checkbox]{width:16px;min-width:16px;height:16px;padding:0;margin:3px 0 0;accent-color:var(--gold)}
 .tp48-cf7-fields .full-width,.tp48-cf7-fields .tp48-submit{grid-column:1/-1}
-.contact .tp48-cf7-fields .tp48-submit{grid-column:4;grid-row:1;align-self:end}
+.contact .tp48-cf7-fields .tp48-submit{grid-column:4;grid-row:1;align-self:end;position:relative}
 .contact .tp48-cf7-fields input[type=submit]{background:linear-gradient(115deg,#f4dfad,#d5aa56);color:#081b27;cursor:pointer}
 .contact-panel .tp48-email-field{grid-column:1/-1}
 .contact-panel .tp48-submit input[type=submit]{width:100%;cursor:pointer;background:linear-gradient(115deg,#f4dfad,#d5aa56);color:#081b27;border:1px solid #ebd298;padding:10px 14px}
 .tp48-cf7-fields .wpcf7-spinner{display:block;margin:8px 0 0}
+.contact .tp48-submit .wpcf7-spinner{position:absolute;top:calc(100% + 6px);right:0;margin:0}
 .contact .wpcf7-not-valid-tip,.contact-panel .wpcf7-not-valid-tip{font-size:12px;color:#ffb5a8}
 .contact .wpcf7 form .wpcf7-response-output,.contact-panel .wpcf7 form .wpcf7-response-output{margin:16px 0 0;padding:12px;color:var(--cream);font-size:13px}
 @media(max-width:700px){.contact .tp48-cf7-fields .tp48-submit{order:2}.contact .tp48-cf7-fields .tp48-acceptance{order:1}}
