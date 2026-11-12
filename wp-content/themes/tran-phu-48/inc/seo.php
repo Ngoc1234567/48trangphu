@@ -1,5 +1,18 @@
 <?php
 if (!defined('ABSPATH')) exit;
+function tp48_ga4_id() {
+    $id=trim((string)tp48_text('ga4'));
+    return wp_get_environment_type()==='production' && preg_match('/^G-[A-Z0-9]+$/',$id) ? $id : '';
+}
+add_action('wp_enqueue_scripts',function () {
+    if (!tp48_ga4_id()) return;
+    wp_enqueue_script('tp48-tracking',get_template_directory_uri().'/assets/tracking.js',[],filemtime(get_template_directory().'/assets/tracking.js'),true);
+    wp_add_inline_script('tp48-tracking','window.tp48Tracking='.wp_json_encode([
+        'measurementId'=>tp48_ga4_id(),
+        'formId'=>(int)get_option('tp48_cf7_form_id'),
+        'pageType'=>is_front_page() ? 'home' : (is_page_template('page-templates/lien-he.php') ? 'contact' : 'other'),
+    ]).';','before');
+});
 function tp48_should_noindex() {
     if (wp_get_environment_type()!=='production') return true;
     if (is_search() || is_404()) return true;
@@ -16,10 +29,14 @@ add_action('wp_head',function () {
     $gsc=tp48_text('gsc');
     if ($gsc) echo '<meta name="google-site-verification" content="'.esc_attr($gsc).'">'."
 ";
-    $ga=tp48_text('ga4');
-    if ($ga && preg_match('/^G-[A-Z0-9]+$/',$ga)) {
+    $ga=tp48_ga4_id();
+    if ($ga) {
         echo '<script async src="https://www.googletagmanager.com/gtag/js?id='.esc_attr($ga).'"></script>';
-        echo '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config",'.wp_json_encode($ga).');</script>';
+        // Strip query/hash data, which can contain visitor-entered personal information.
+        $page_url=is_search() || is_404() ? home_url('/') : (is_singular() ? get_permalink() : get_pagenum_link());
+        $page_url=preg_split('/[?#]/',$page_url)[0];
+        $config=['page_location'=>$page_url,'page_title'=>is_search() ? 'Tìm kiếm' : wp_get_document_title()];
+        echo '<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());var tp48GaConfig='.wp_json_encode($config).';try{tp48GaConfig.page_referrer=document.referrer?new URL(document.referrer).origin:"";}catch(e){tp48GaConfig.page_referrer="";}gtag("config",'.wp_json_encode($ga).',tp48GaConfig);</script>';
     }
 },20);
 // Yoast owns metadata when active. A small fallback keeps basic metadata intact otherwise.
