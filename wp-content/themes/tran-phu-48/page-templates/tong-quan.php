@@ -11,7 +11,7 @@ if (!$cover) $cover=has_post_thumbnail() ? get_post_thumbnail_id():tp48_home_fie
 <?php echo tp48_home_image_html($cover,'','',true); ?>
 <?php if (tp48_detail_field('overview_caption')): ?><figcaption class="hero-caption"><?php echo tp48_detail_text('overview_caption'); ?></figcaption><?php endif; ?>
 </figure>
-<section class="section-space intro-section ruled">
+<section id="gia-tri-ben-vung" class="section-space intro-section ruled">
 <div><p class="eyebrow">Tổng quan dự án</p><h2><?php echo tp48_detail_text('overview_heading'); ?></h2><p class="muted">Nha Trang</p></div>
 <div><div class="entry-content page-body"><?php tp48_detail_body('overview_intro'); ?></div>
 <?php if (tp48_detail_field('overview_facts')): ?><div class="overview-facts"><h3>Thông tin đã xác nhận</h3><p><?php echo nl2br(tp48_detail_text('overview_facts')); ?></p></div><?php endif; ?>

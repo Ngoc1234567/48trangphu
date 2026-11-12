@@ -3,7 +3,7 @@
 if (!defined('ABSPATH')) exit;
 get_header();
 $query=trim((string)tp48_detail_field('map_query'));
-$map_url='https://www.google.com/maps/search/?api=1&query='.rawurlencode($query);
+$map_url=esc_url_raw((string)tp48_detail_field('map_link'),['http','https']) ?: 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($query);
 ?>
 <main id="main" class="section-page">
 <?php get_template_part('template-parts/page-heading'); ?>

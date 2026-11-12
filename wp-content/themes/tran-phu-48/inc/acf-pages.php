@@ -89,6 +89,7 @@ function tp48_interior_field_groups() {
     $location_fields=[
         $field('location_relationship','Vị trí và các điểm lân cận','textarea'),
         $field('location_heading','Tiêu đề vị trí'),$field('map_query','Địa chỉ tìm trên Google Maps','text',['instructions'=>'Nhập địa chỉ hoặc tên địa điểm; website tự tạo bản đồ và nút mở bản đồ. Không nhập mã iframe.']),
+        $field('map_link','Link ghim Google Maps','url',['instructions'=>'Dán link ghim chính xác khi đã có. Để trống dùng tìm kiếm theo địa chỉ ở trên.']),
         $field('map_note','Chú thích bản đồ','textarea'),$field('location_photo','Ảnh khu vực / thực địa','image'),
         $field('location_photo_caption','Chú thích ảnh khu vực','textarea'),$field('location_intro','Giới thiệu vị trí','wysiwyg'),
         $field('landmark_photo','Ảnh các điểm nhận diện','image'),$field('landmark_photo_caption','Chú thích ảnh nhận diện','textarea'),

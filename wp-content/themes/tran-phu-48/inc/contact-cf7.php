@@ -8,23 +8,26 @@ function tp48_cf7_form() {
 function tp48_is_cf7_form($form) {
     return $form && (int)$form->id()===(int)get_option('tp48_cf7_form_id');
 }
+function tp48_cf7_form_markup() {
+    $privacy=esc_url(tp48_page_url('chinh-sach-bao-mat'));
+    return '<div class="contact-form tp48-cf7-fields">'
+        .'<label>Họ và tên *[text* full-name maxlength:100 autocomplete:name placeholder "Họ và tên"]</label>'
+        .'<label class="tp48-phone-field">Số điện thoại *[tel* phone maxlength:20 autocomplete:tel placeholder "Số điện thoại"]</label>'
+        .'<label class="tp48-email-field">Email (không bắt buộc)[email email maxlength:254 autocomplete:email placeholder "Email (không bắt buộc)"]</label>'
+        .'<div class="full-width tp48-acceptance">[acceptance consent]Tôi đồng ý nhận liên hệ và cập nhật theo <a href="'.$privacy.'">chính sách quyền riêng tư</a>.[/acceptance]</div>'
+        .'<div class="honeypot" aria-hidden="true">[text website tabindex:-1 autocomplete:off]</div>'
+        .'<div class="tp48-submit">[submit class:button class:gold "Nhận thông tin"]</div></div>';
+}
 // Create once in admin; never overwrite subsequent edits in Contact Form 7.
 add_action('admin_init',function () {
     if (!class_exists('WPCF7_ContactForm') || !current_user_can('manage_options') || tp48_cf7_form()) return;
     $form=WPCF7_ContactForm::get_template(['title'=>'48 Trần Phú — Nhận đăng ký','locale'=>'vi']);
-    $privacy=esc_url(tp48_page_url('chinh-sach-bao-mat'));
-    $markup='<div class="contact-form tp48-cf7-fields">'
-        .'<label>Họ và tên *[text* full-name maxlength:100 autocomplete:name placeholder "Họ và tên"]</label>'
-        .'<label>Email *[email* email maxlength:254 autocomplete:email placeholder "Email"]</label>'
-        .'<label class="tp48-phone-field">Số điện thoại (không bắt buộc)[tel phone maxlength:20 autocomplete:tel placeholder "Số điện thoại (không bắt buộc)"]</label>'
-        .'<div class="full-width tp48-acceptance">[acceptance consent]Tôi đồng ý nhận liên hệ và cập nhật theo <a href="'.$privacy.'">chính sách quyền riêng tư</a>.[/acceptance]</div>'
-        .'<div class="honeypot" aria-hidden="true">[text website tabindex:-1 autocomplete:off]</div>'
-        .'<div class="tp48-submit">[submit class:button class:gold "Nhận thông tin"]</div></div>';
+    $markup=tp48_cf7_form_markup();
     $mail=$form->prop('mail');
     $mail['recipient']=tp48_contact_recipient();
     $mail['subject']='Yêu cầu nhận cập nhật — 48 Trần Phú';
-    $mail['body']="Họ và tên: [full-name]\nEmail: [email]\nSố điện thoại: [phone]\nĐồng ý nhận liên hệ: [consent]\nTrang gửi: [_url]";
-    $mail['additional_headers']='Reply-To: [email]';
+    $mail['body']="Họ và tên: [full-name]\nSố điện thoại: [phone]\nEmail: [email]\nĐồng ý nhận liên hệ: [consent]\nTrang gửi: [_url]";
+    $mail['additional_headers']='';
     $messages=$form->prop('messages');
     $messages['mail_sent_ok']='Cảm ơn bạn. Yêu cầu nhận cập nhật đã được ghi nhận.';
     $messages['mail_sent_ng']='Yêu cầu đã được ghi nhận, nhưng chưa gửi được email thông báo. Bạn không cần gửi lại.';
@@ -49,7 +52,15 @@ add_action('admin_notices',function () {
     }
 });
 add_filter('wpcf7_mail_components',function ($components,$form,$mail) {
-    if (tp48_is_cf7_form($form) && $mail->name()==='mail') $components['recipient']=tp48_contact_recipient();
+    if (tp48_is_cf7_form($form) && $mail->name()==='mail') {
+        $components['recipient']=tp48_contact_recipient();
+        $submission=WPCF7_Submission::get_instance();
+        $email=$submission ? $submission->get_posted_data('email'):'';
+        // Optional email must never produce an empty Reply-To header.
+        $headers=preg_replace('/^Reply-To:.*(?:\r?\n|$)/mi','',(string)($components['additional_headers'] ?? ''));
+        if (is_string($email) && is_email($email)) $headers=trim($headers)."\nReply-To: ".sanitize_email($email);
+        $components['additional_headers']=trim($headers);
+    }
     return $components;
 },10,3);
 add_filter('wpcf7_autop_or_not',function ($autop,$options) {
