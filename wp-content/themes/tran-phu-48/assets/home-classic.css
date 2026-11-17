@@ -145,6 +145,10 @@ html{scroll-behavior:smooth}
 .home-page .location{height:auto;min-height:0;max-height:none}
 .home-page .location>img{position:static;width:100%;height:auto;object-fit:contain;object-position:center;align-self:center}
 .home-page .location-copy{min-width:0}
+/* A shallow crop keeps the excavators above and the site cabins below. */
+.home-page .journal{aspect-ratio:3/2;min-height:0;align-items:center;text-shadow:0 1px 4px #001522}
+.home-page .journal-image{object-position:center;object-fit:cover}
+.home-page .journal:after{background:linear-gradient(90deg,rgba(0,22,34,.55),rgba(0,22,34,.2))}
 /* Keep gallery controls clear of the image on phones, including landscape. */
 @media(max-width:700px),(max-height:500px){
  .lightbox{width:calc(100% - 24px);max-width:none;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:54px 12px 62px;overflow:hidden}
