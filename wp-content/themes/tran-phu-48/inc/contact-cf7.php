@@ -16,8 +16,61 @@ function tp48_cf7_form_markup() {
         .'<label class="tp48-email-field">Email (không bắt buộc)[email email maxlength:254 autocomplete:email placeholder "Email (không bắt buộc)"]</label>'
         .'<div class="full-width tp48-acceptance">[acceptance consent]Tôi đồng ý nhận liên hệ và cập nhật theo <a href="'.$privacy.'">chính sách quyền riêng tư</a>.[/acceptance]</div>'
         .'<div class="honeypot" aria-hidden="true">[text website tabindex:-1 autocomplete:off]</div>'
-        .'<div class="tp48-submit">[submit class:button class:gold "Nhận thông tin"]</div></div>';
+        .'<div class="tp48-submit">[submit class:button class:gold "Nhận cập nhật"]</div></div>';
 }
+// Resolve the homepage during both page rendering and CF7 REST submissions.
+function tp48_cf7_home_id() {
+    if (!tp48_is_cf7_form(wpcf7_get_current_contact_form())) return 0;
+    if (is_front_page() || is_page_template('front-page.php')) return tp48_home_post_id();
+    $submission=class_exists('WPCF7_Submission') ? WPCF7_Submission::get_instance():null;
+    $id=$submission ? (int)$submission->get_meta('container_post_id'):0;
+    return $id && ($id===(int)get_option('page_on_front') || get_page_template_slug($id)==='front-page.php') ? $id:0;
+}
+function tp48_cf7_home_text($name,$id) {
+    $value=tp48_home_field('contact',$name,$id);
+    return is_scalar($value) ? trim(wp_strip_all_tags((string)$value)):'';
+}
+add_filter('wpcf7_form_tag',function ($tag,$replace) {
+    $id=$replace ? tp48_cf7_home_id():0;
+    if (!$id) return $tag;
+    $fields=['full-name'=>'name_label','phone'=>'phone_label','email'=>'email_label'];
+    if (isset($fields[$tag['name'] ?? ''])) {
+        $label=tp48_cf7_home_text($fields[$tag['name']],$id);
+        if (in_array('placeholder',$tag['options'],true) || in_array('watermark',$tag['options'],true)) {
+            $tag['values']=[$label];$tag['labels']=[$label];$tag['raw_values']=[$label];
+        }
+    }
+    if (($tag['basetype'] ?? '')==='submit') {
+        $label=tp48_cf7_home_text('button_label',$id);
+        $tag['values']=[$label];$tag['labels']=[$label];$tag['raw_values']=[$label];
+    }
+    if (($tag['basetype'] ?? '')==='acceptance' && ($tag['name'] ?? '')==='consent') {
+        $privacy=tp48_home_field('contact','privacy_link',$id);
+        $tag['content']=esc_html(tp48_cf7_home_text('consent_text',$id));
+        if (tp48_home_link_attributes($privacy)) {
+            $tag['content'].=' <a '.tp48_home_link_attributes($privacy).'>'.esc_html($privacy['title'] ?? '').'</a>';
+        }
+    }
+    return $tag;
+},10,2);
+add_filter('wpcf7_form_elements',function ($html) {
+    $id=tp48_cf7_home_id();
+    if (!$id) return $html;
+    // Preserve CF7 controls, validation and administrator edits to the form layout.
+    foreach (['full-name'=>'name_label','phone'=>'phone_label','email'=>'email_label'] as $name=>$field) {
+        $label=esc_html(tp48_cf7_home_text($field,$id));
+        $pattern='~(<label\\b[^>]*>)[^<]*(?=<(?:span|input)\\b[^>]*(?:data-name|name)=["\']'.preg_quote($name,'~').'["\'])~i';
+        $required=$name==='email' ? ' (không bắt buộc)':' *';
+        $html=preg_replace_callback($pattern,function($matches) use ($label,$required) { return $matches[1].$label.$required; },$html);
+    }
+    $note=tp48_cf7_home_text('note',$id);
+    if ($note!=='') $html.='<p class="fine-print tp48-contact-note">'.nl2br(esc_html($note)).'</p>';
+    return $html;
+});
+add_filter('wpcf7_display_message',function ($message,$status) {
+    $id=$status==='mail_sent_ok' ? tp48_cf7_home_id():0;
+    return $id ? tp48_cf7_home_text('success_message',$id):$message;
+},10,2);
 // Create once in admin; never overwrite subsequent edits in Contact Form 7.
 add_action('admin_init',function () {
     if (!class_exists('WPCF7_ContactForm') || !current_user_can('manage_options') || tp48_cf7_form()) return;

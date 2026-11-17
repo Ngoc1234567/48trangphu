@@ -17,7 +17,7 @@ function tp48_home_defaults() {
         'identity'=>['enabled'=>1,'order'=>40,'image'=>tp48_image('sunrise'),'alt'=>'Ánh bình minh trên vịnh biển Nha Trang','title'=>'48 Trần Phú · Giữa lòng phố biển','description'=>tp48_text('identity','Thành phố của biển, ánh sáng và những giá trị sống đặc trưng.')],
         'gallery'=>['enabled'=>1,'order'=>50,'title'=>'48 Trần Phú qua hình ảnh','description'=>"Những khoảnh khắc tiêu biểu\nvề vị trí, cảnh quan và phố biển\nNha Trang.",'button_label'=>'Xem hình ảnh','images'=>[['url'=>tp48_image('location'),'alt'=>'Đường bờ biển Nha Trang','caption'=>'Đường bờ biển Nha Trang'],['url'=>tp48_image('hero'),'alt'=>'Tháp Trầm Hương về đêm','caption'=>'Tháp Trầm Hương về đêm'],['url'=>tp48_image('sunrise'),'alt'=>'Bình minh trên vịnh biển','caption'=>'Bình minh trên vịnh biển']],'empty_message'=>'Hình ảnh sẽ được cập nhật.'],
         'journal'=>['enabled'=>1,'order'=>60,'image'=>tp48_image('journal'),'alt'=>'Ảnh minh họa hoạt động xây dựng, không phải ảnh tiến độ thực tế của dự án','image_note'=>'','title'=>'Tiến độ công trình','description'=>"Cập nhật tiến độ thi công, hình ảnh thực tế\nvà những dấu mốc quan trọng của dự án.",'button_label'=>'Xem tiến độ','mode'=>'page','button'=>['url'=>tp48_page_url('tien-do'),'title'=>'Xem tiến độ','target'=>''],'posts'=>[],'limit'=>6,'show_date'=>1,'show_excerpt'=>1,'empty_message'=>'Nhật ký công trình sẽ được cập nhật tại đây khi có thông tin chính thức.'],
-        'contact'=>['enabled'=>1,'order'=>70,'title'=>"Khám phá thêm\nvề 48 Trần Phú",'name_label'=>'Họ và tên','phone_label'=>'Số điện thoại','email_label'=>'Email','button_label'=>'Nhận thông tin','consent_text'=>'Tôi đồng ý nhận liên hệ/cập nhật theo','privacy_link'=>['url'=>tp48_page_url('chinh-sach-bao-mat'),'title'=>'chính sách quyền riêng tư','target'=>''],'note'=>'Thông tin được sử dụng để phản hồi yêu cầu tìm hiểu của bạn.','success_message'=>'Cảm ơn bạn. Thông tin của bạn đã được ghi nhận.'],
+        'contact'=>['enabled'=>1,'order'=>70,'title'=>"Khám phá thêm\nvề 48 Trần Phú",'name_label'=>'Họ và tên','phone_label'=>'Số điện thoại','email_label'=>'Email','button_label'=>'Nhận cập nhật','consent_text'=>'Tôi đồng ý nhận liên hệ/cập nhật theo','privacy_link'=>['url'=>tp48_page_url('chinh-sach-bao-mat'),'title'=>'chính sách quyền riêng tư','target'=>''],'note'=>'Thông tin được sử dụng để phản hồi yêu cầu tìm hiểu của bạn.','success_message'=>'Cảm ơn bạn. Thông tin của bạn đã được ghi nhận.'],
     ];
     return $defaults;
 }
@@ -72,18 +72,9 @@ function tp48_home_link_attributes($link) {
 }
 function tp48_home_gallery() {
     $images=tp48_home_field('gallery','images');$result=[];
-    $captions=[
-        'thu-vien-mat-tien'=>'Mặt tiền khu đất và hàng rào công trường tại giao lộ Nguyễn Thị Minh Khai. Tòa nhà cao bên phải là công trình lân cận.',
-        'thu-vien-khu-dat-va-bien'=>'Khu đất ở phía dưới ảnh và cảnh biển. Novotel là công trình lân cận, không thuộc dự án.',
-        'thu-vien-goc-nhin-tu-bien'=>'Ảnh ghi nhận hiện trạng cũ nhìn từ biển, với quảng trường phía trước. Khung đỏ có sẵn trên ảnh không thể hiện ranh giới pháp lý.',
-    ];
     foreach (is_array($images) ? $images:[] as $value) {
         $data=tp48_home_image_data($value);
         if (!$data) continue;
-        $filename=basename((string)wp_parse_url($data['url'],PHP_URL_PATH));
-        foreach ($captions as $name=>$caption) {
-            if (strpos($filename,$name)!==false) { $data['caption']=$caption; $data['alt']=$caption; break; }
-        }
         $result[]=$data;
     }
     return $result;
