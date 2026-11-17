@@ -72,7 +72,20 @@ function tp48_home_link_attributes($link) {
 }
 function tp48_home_gallery() {
     $images=tp48_home_field('gallery','images');$result=[];
-    foreach (is_array($images) ? $images:[] as $value) { $data=tp48_home_image_data($value); if ($data) $result[]=$data; }
+    $captions=[
+        'thu-vien-mat-tien'=>'Mặt tiền khu đất và hàng rào công trường tại giao lộ Nguyễn Thị Minh Khai. Tòa nhà cao bên phải là công trình lân cận.',
+        'thu-vien-khu-dat-va-bien'=>'Khu đất ở phía dưới ảnh và cảnh biển. Novotel là công trình lân cận, không thuộc dự án.',
+        'thu-vien-goc-nhin-tu-bien'=>'Ảnh ghi nhận hiện trạng cũ nhìn từ biển, với quảng trường phía trước. Khung đỏ có sẵn trên ảnh không thể hiện ranh giới pháp lý.',
+    ];
+    foreach (is_array($images) ? $images:[] as $value) {
+        $data=tp48_home_image_data($value);
+        if (!$data) continue;
+        $filename=basename((string)wp_parse_url($data['url'],PHP_URL_PATH));
+        foreach ($captions as $name=>$caption) {
+            if (strpos($filename,$name)!==false) { $data['caption']=$caption; $data['alt']=$caption; break; }
+        }
+        $result[]=$data;
+    }
     return $result;
 }
 add_filter('acf/load_field/key=field_tp48_home_brand_menu',function($field) {
