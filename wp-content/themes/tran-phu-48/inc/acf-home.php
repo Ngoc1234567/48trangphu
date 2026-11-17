@@ -6,7 +6,7 @@ function tp48_home_defaults() {
     if ($defaults!==null) return $defaults;
     $defaults=[
         'brand'=>['logo'=>0,'number'=>'48','name'=>'TRẦN PHÚ','city'=>'NHA TRANG','show_menu'=>1,'menu'=>0],
-        'hero'=>['enabled'=>1,'order'=>10,'image'=>tp48_image('hero'),'mobile_image'=>0,'alt'=>'Tháp Trầm Hương bên bờ biển Nha Trang khi thành phố lên đèn','video'=>0,'number'=>'48','name'=>'TRẦN PHÚ','city'=>'NHA TRANG','headline'=>tp48_text('classic_headline','Dấu ấn mới bên vịnh biển'),'subtitle'=>tp48_text('classic_subtitle','A New Landmark on Nha Trang Bay'),'button'=>['url'=>'#vi-tri','title'=>'Khám phá thêm','target'=>'']],
+        'hero'=>['enabled'=>1,'order'=>10,'image'=>tp48_image('hero'),'mobile_image'=>0,'alt'=>'Tháp Trầm Hương bên bờ biển Nha Trang khi thành phố lên đèn','video'=>0,'number'=>'48','name'=>'TRẦN PHÚ','city'=>'NHA TRANG','headline'=>tp48_text('classic_headline','Dấu ấn mới bên vịnh biển'),'subtitle'=>tp48_text('classic_subtitle','A New Landmark on Nha Trang Bay'),'button'=>['url'=>'#kham-pha-muc','title'=>'Khám phá thêm','target'=>'']],
         'pillars'=>['enabled'=>1,'order'=>20,
             'item_1'=>['enabled'=>1,'title'=>'Vị trí đắc địa','icon'=>'pin','image'=>0,'link'=>['url'=>tp48_page_url('vi-tri'),'title'=>'','target'=>'']],
             'item_2'=>['enabled'=>1,'title'=>'Bên vịnh biển','icon'=>'waves','image'=>0,'link'=>['url'=>tp48_page_url('vi-tri').'#ben-vinh-bien','title'=>'','target'=>'']],
