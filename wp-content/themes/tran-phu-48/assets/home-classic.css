@@ -145,9 +145,9 @@ html{scroll-behavior:smooth}
 .home-page .location{height:auto;min-height:0;max-height:none}
 .home-page .location>img{position:static;width:100%;height:auto;object-fit:contain;object-position:center;align-self:center}
 .home-page .location-copy{min-width:0}
-/* A shallow crop keeps the excavators above and the site cabins below. */
-.home-page .journal{aspect-ratio:3/2;min-height:0;align-items:center;text-shadow:0 1px 4px #001522}
-.home-page .journal-image{object-position:center;object-fit:cover}
+/* Limit the desktop banner height while keeping the machinery and site in view. */
+.home-page .journal{aspect-ratio:auto;min-height:clamp(400px,32vw,500px);align-items:center;text-shadow:0 1px 4px #001522}
+.home-page .journal-image{object-position:center 45%;object-fit:cover}
 .home-page .journal:after{background:linear-gradient(90deg,rgba(0,22,34,.55),rgba(0,22,34,.2))}
 /* Keep gallery controls clear of the image on phones, including landscape. */
 @media(max-width:700px),(max-height:500px){
@@ -168,5 +168,10 @@ html{scroll-behavior:smooth}
  .home-page .location .text-link{position:static;font-size:10px;gap:8px;min-height:36px;margin-top:6px}
  .home-page .location:after{display:none}
  .home-page .location-copy{position:static;width:100%;padding:24px 22px;background:var(--navy)}
+ .home-page .journal{min-height:clamp(300px,75vw,380px);padding:28px 24px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:16px}
+ .home-page .journal-image{object-position:65% 45%}
+ .home-page .journal:after{background:linear-gradient(90deg,rgba(0,22,34,.78),rgba(0,22,34,.25))}
+ .home-page .journal-copy{max-width:280px}
+ .home-page .journal-copy p{display:block;margin:0 0 8px;font-size:14px;line-height:1.6}
  .home-page .journal-copy .text-link{position:static;opacity:1;font-size:11px;min-height:44px;margin-top:8px}
 }
