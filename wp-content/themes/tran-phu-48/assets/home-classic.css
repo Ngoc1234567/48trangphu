@@ -140,6 +140,10 @@ html{scroll-behavior:smooth}
 .home-page .identity h2{font-size:clamp(14px,3.5vw,36px);white-space:nowrap;text-wrap:nowrap;overflow-wrap:normal}
 .home-page .gallery-item img{object-fit:contain}
 .home-page .gallery-item:hover img{transform:none}
+/* Preserve the full site, both roads and the intersection in the location photo. */
+.home-page .location{height:auto;min-height:0;max-height:none}
+.home-page .location>img{position:static;width:100%;height:auto;object-fit:contain;object-position:center;align-self:center}
+.home-page .location-copy{min-width:0}
 /* Keep gallery controls clear of the image on phones, including landscape. */
 @media(max-width:700px),(max-height:500px){
  .lightbox{width:calc(100% - 24px);max-width:none;max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:54px 12px 62px;overflow:hidden}
@@ -157,6 +161,7 @@ html{scroll-behavior:smooth}
  .home-page .gallery-copy h2{flex:1 1 200px;font-size:clamp(20px,5.8vw,26px)}
  .home-page .gallery-copy .text-link{font-size:11px;gap:8px;min-height:44px}
  .home-page .location .text-link{position:static;font-size:10px;gap:8px;min-height:36px;margin-top:6px}
- .home-page .location-copy{bottom:14px}
+ .home-page .location:after{display:none}
+ .home-page .location-copy{position:static;width:100%;padding:24px 22px;background:var(--navy)}
  .home-page .journal-copy .text-link{position:static;opacity:1;font-size:11px;min-height:44px;margin-top:8px}
 }
