@@ -1,5 +1,6 @@
 <?php if (!defined('ABSPATH')) exit;
 $button=tp48_home_field('hero','button');$mobile=tp48_home_image_data(tp48_home_field('hero','mobile_image'));
+$button=['url'=>'#kham-pha','title'=>is_array($button) ? ($button['title'] ?? 'Khám phá thêm'):'Khám phá thêm','target'=>''];
 $video_id=absint(tp48_home_field('hero','video'));$video=$video_id && in_array(get_post_mime_type($video_id),['video/mp4','video/webm'],true) ? wp_get_attachment_url($video_id):'';
 ?>
 <figure class="hero-figure">
