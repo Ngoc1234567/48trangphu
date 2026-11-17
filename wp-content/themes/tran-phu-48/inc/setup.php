@@ -34,7 +34,7 @@ function tp48_navigation() {
     echo '<ul class="nav-list">';
     foreach ([''=>'Trang chủ','tong-quan'=>'Tổng quan','vi-tri'=>'Vị trí','mat-bang'=>'Mặt bằng','tien-ich'=>'Tiện ích','tien-do'=>'Tiến độ','the-journal'=>'The Journal','lien-he'=>'Liên hệ'] as $slug=>$title) {
         $current=$slug ? is_page($slug) : is_front_page();
-        echo '<li><a href="'.esc_url($slug ? tp48_page_url($slug) : home_url('/')).'"'.($current ? ' aria-current="page"':'').'>'.esc_html($title).'</a></li>';
+        echo '<li'.($slug === '' ? ' class="menu-item-home"':'').'><a href="'.esc_url($slug ? tp48_page_url($slug) : home_url('/')).'"'.($current ? ' aria-current="page"':'').'>'.esc_html($title).'</a></li>';
     }
     echo '</ul>';
 }

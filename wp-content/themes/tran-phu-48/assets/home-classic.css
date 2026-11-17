@@ -109,6 +109,7 @@ html{scroll-behavior:smooth}
 .site-header.is-menu-collapsed .nav-list li:not(:last-child)>a{border-bottom:1px solid var(--line)}
 /* Collapse a longer selected menu before it overlaps the logo. */
 @media(min-width:701px){
+.site-header:not(.is-menu-collapsed) .nav-list>.menu-item-home{display:none}
 .site-header.is-menu-collapsed .menu-toggle{display:flex;flex-direction:column;justify-content:center;gap:5px;width:40px;height:40px;padding:8px;background:transparent;border:0;flex-shrink:0}
 .site-header.is-menu-collapsed .menu-toggle span{display:block;height:1px;width:25px;background:var(--cream)}
 .site-header.is-menu-collapsed .menu-toggle[aria-expanded=true] span:first-child{transform:translateY(6px) rotate(45deg)}
