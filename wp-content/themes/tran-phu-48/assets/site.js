@@ -3,6 +3,21 @@
 // Animate each homepage section once as it enters the viewport.
 // Content stays visible if JavaScript or IntersectionObserver is unavailable.
 const home=document.querySelector('.home-page');
+// Measure the category block itself instead of relying on saved ACF anchors.
+const discovery=home?.querySelector('.hero-content .button');
+const categories=home?.querySelector('.pillars');
+if(discovery && categories){
+ discovery.setAttribute('href','#'+categories.id);
+ discovery.removeAttribute('target');
+ discovery.addEventListener('click',event=>{
+  if(event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || event.button!==0)return;
+  event.preventDefault();
+  const adminBar=document.querySelector('#wpadminbar');
+  const adminBottom=adminBar ? Math.max(0,adminBar.getBoundingClientRect().bottom):0;
+  const top=Math.max(0,window.scrollY+categories.getBoundingClientRect().top-adminBottom-24);
+  window.scrollTo({top,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+ });
+}
 if(home && 'IntersectionObserver' in window){
  const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
  const blocks=[...home.querySelectorAll(':scope > section:not(.hero), :scope > .pillars')];
