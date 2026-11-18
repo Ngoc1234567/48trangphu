@@ -83,7 +83,7 @@
 .overview-project-photo figcaption{margin-top:12px;font-size:13px;line-height:1.7}
 .overview-project-single{grid-template-columns:minmax(0,1fr)}
 .overview-project-single>.overview-project-facts,.overview-project-single>.overview-project-photo{grid-column:1}
-.overview-direction>h2,.overview-direction>.entry-content{width:100%;max-width:860px;margin-inline:auto}
+.overview-direction>h2,.overview-direction>.entry-content{width:100%;max-width:none;margin-inline:0}
 .overview-direction>h2{font-size:clamp(26px,3vw,40px);line-height:1.3;text-wrap:balance}
 .overview-direction>.entry-content{font-size:16px;line-height:1.85;overflow-wrap:anywhere}
 .overview-direction .entry-content>:first-child{margin-top:0}
