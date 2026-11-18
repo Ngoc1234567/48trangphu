@@ -115,3 +115,10 @@
  .overview-page+.lightbox figure img{height:auto;max-height:calc(100dvh - 180px);object-fit:contain}
  .overview-page+.lightbox .lightbox-close{width:44px;height:44px}
 }
+
+/* Location reference images retain all labels and landmarks at every screen size. */
+.location-page .location-reference img{display:block;width:100%;height:auto;max-height:none;aspect-ratio:auto;object-fit:contain}
+.location-page .location-view .entry-content{max-width:900px}
+.location-page .location-reference figcaption{white-space:normal;overflow-wrap:anywhere}
+.location-page .overview-actions{margin-bottom:0}
+@media(max-width:700px){.location-page .overview-actions{flex-direction:column;align-items:stretch}}

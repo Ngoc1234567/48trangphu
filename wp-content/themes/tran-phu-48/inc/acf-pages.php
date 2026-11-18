@@ -12,15 +12,15 @@ function tp48_detail_defaults() {
         'location_relationship'=>'48 Trần Phú đối diện Quảng trường 2/4, gần Tháp Trầm Hương.',
         'map_query'=>'48 Tran Phu Nha Trang',
         'map_note'=>'Bản đồ tra cứu khu vực, không thể hiện ranh giới pháp lý của dự án.',
-        'location_intro'=>'Địa chỉ dự án: 48 Trần Phú, Nha Trang. Thông tin lối tiếp cận và ảnh khảo sát hiện trạng sẽ được bổ sung sau khi xác nhận.',
-        'location_photo_caption'=>'Ảnh khu vực tham khảo, không phải ảnh hiện trạng công trình.',
-        'landmark_photo_caption'=>'Tháp Trầm Hương — điểm nhận diện khu vực quảng trường ven biển. Ảnh khu vực tham khảo.',
-        'landmark_1_title'=>'Đường Trần Phú',
-        'landmark_1_description'=>'Trục đường ven biển để nhận diện khu vực địa chỉ dự án.',
-        'landmark_2_title'=>'Tháp Trầm Hương',
-        'landmark_2_description'=>'Điểm nhận diện khu vực trung tâm ven biển Nha Trang. Tra cứu vị trí tương quan trên bản đồ.',
-        'landmark_3_title'=>'Quảng trường 2/4 và cột cờ',
-        'landmark_3_description'=>'Các điểm nhận diện để đối chiếu khi xem ảnh khu vực và khảo sát thực tế.',
+        'location_corner_heading'=>'Hai mặt đường tại góc giao trung tâm',
+        'location_corner_alt'=>'Khu đất 48 Trần Phú tại góc giao Nguyễn Thị Minh Khai nhìn từ trên cao.',
+        'location_sea_heading'=>'Nhìn từ biển vào',
+        'location_sea_alt'=>'Vị trí khu đất 48 Trần Phú nhìn từ biển, cạnh Quảng trường 2/4 và Tháp Trầm Hương.',
+        'location_sea_note'=>'Đường viền đỏ chỉ là dấu nhận diện, không dùng làm ranh giới địa chính.',
+        'location_overview_label'=>'Xem tổng quan dự án',
+        'location_overview_path'=>'/tong-quan/',
+        'location_progress_label'=>'Theo dõi tiến độ',
+        'location_progress_path'=>'/tien-do/',
         'progress_heading'=>'Tiến độ công trình',
         'progress_intro'=>'Các cập nhật và hình ảnh được đăng tải khi có thông tin xác nhận.',
         'progress_empty'=>'Chưa có bản cập nhật tiến độ được xác nhận. Các bản cập nhật sẽ được xếp mới nhất lên đầu, kèm ngày cập nhật, ảnh hoặc video và mô tả ngắn.',
@@ -105,16 +105,29 @@ function tp48_interior_field_groups() {
         $field('overview_actions_help','5. Nút điều hướng','message',['message'=>'Hai nút cố định: Khám phá vị trí → /vi-tri/ và Theo dõi tiến độ → /tien-do/.']),
     ],$page('tong-quan'));
     $location_fields=[
-        $field('location_relationship','Vị trí và các điểm lân cận','textarea'),
-        $field('location_heading','Tiêu đề vị trí'),$field('map_query','Địa chỉ tìm trên Google Maps','text',['instructions'=>'Nhập địa chỉ hoặc tên địa điểm; website tự tạo bản đồ và nút mở bản đồ. Không nhập mã iframe.']),
-        $field('map_link','Link ghim Google Maps','url',['instructions'=>'Dán link ghim chính xác khi đã có. Để trống dùng tìm kiếm theo địa chỉ ở trên.']),
-        $field('map_note','Chú thích bản đồ','textarea'),$field('location_photo','Ảnh khu vực / thực địa','image'),
-        $field('location_photo_caption','Chú thích ảnh khu vực','textarea'),$field('location_intro','Giới thiệu vị trí','wysiwyg'),
-        $field('landmark_photo','Ảnh các điểm nhận diện','image'),$field('landmark_photo_caption','Chú thích ảnh nhận diện','textarea'),
+        $field('location_map_tab','1. Bản đồ','tab'),
+        $field('location_help','Cách nhập trang Vị trí','message',['message'=>'Nhập lần lượt theo 4 tab, cùng thứ tự hiển thị trên trang. Tiêu đề đầu trang dùng tên Trang ở phía trên. Hai ảnh mới thay ảnh demo; chưa chọn ảnh thì website ẩn ảnh. Nhập xong bấm Cập nhật và Xem trang.']),
+        $field('location_heading','Tiêu đề phần bản đồ'),
+        $field('location_relationship','Giới thiệu vị trí','textarea',['rows'=>3]),
+        $field('map_query','Địa chỉ tìm trên Google Maps','text',['instructions'=>'Nhập địa chỉ hoặc tên địa điểm; website tự tạo bản đồ. Không nhập mã iframe.']),
+        $field('map_link','Link ghim Google Maps','url',['instructions'=>'Dán link ghim chính xác. Để trống dùng tìm kiếm theo địa chỉ ở trên.']),
+        $field('map_note','Chú thích bản đồ','textarea',['rows'=>2]),
     ];
-    for ($i=1;$i<=3;$i++) {
-        $location_fields[]=$field('landmark_'.$i.'_title','Điểm nhận diện '.$i.' — Tên');
-        $location_fields[]=$field('landmark_'.$i.'_description','Điểm nhận diện '.$i.' — Chú thích','textarea');
+    foreach (['corner'=>['2. Góc giao hai đường','01-goc-giao-hai-duong.webp','Giữ cả hai nhãn tên đường trên ảnh. Ảnh hiển thị nguyên tỷ lệ, không cắt khung.'],
+              'sea'=>['3. Nhìn từ biển','02-vi-tri-nhin-tu-bien.webp','Giữ trong khung cả khu đất đánh dấu, quảng trường và Tháp Trầm Hương. Ảnh hiển thị nguyên tỷ lệ, không cắt khung.']] as $key=>$config) {
+        $prefix='location_'.$key;
+        $location_fields[]=$field($prefix.'_tab',$config[0],'tab');
+        $location_fields[]=$field($prefix.'_heading','Tiêu đề mục');
+        $location_fields[]=$field($prefix.'_image','Ảnh','image',['instructions'=>'Chọn tệp '.$config[1].'. '.$config[2]]);
+        $location_fields[]=$field($prefix.'_alt','ALT — mô tả ảnh cho trình đọc màn hình','text',['instructions'=>'Đã điền theo yêu cầu khách hàng. Có thể sửa trực tiếp tại đây, không cần vào Thư viện.']);
+        $location_fields[]=$field($prefix.'_caption','Chú thích ngay dưới ảnh','textarea',['rows'=>3,'instructions'=>'Chỉ dán nội dung chú thích. Không dán nhãn “Chú thích ảnh 01/02” từ file nội dung. Để trống để ẩn chú thích.']);
+        $location_fields[]=$field($prefix.'_description','Đoạn mô tả','wysiwyg',['instructions'=>'Dán đoạn mô tả tương ứng trong file nội dung. Hiển thị dưới chú thích ảnh. Để trống để ẩn.']);
+        if ($key==='sea') $location_fields[]=$field($prefix.'_note','Lưu ý về đường viền đỏ','textarea',['rows'=>2,'instructions'=>'Hiển thị dưới ảnh, trước đoạn mô tả.']);
+    }
+    $location_fields[]=$field('location_actions_tab','4. Liên kết cuối trang','tab');
+    foreach (['overview'=>'Nút tổng quan','progress'=>'Nút tiến độ'] as $key=>$label) {
+        $location_fields[]=$field('location_'.$key.'_label',$label.' — Chữ hiển thị','text',['wrapper'=>['width'=>'50']]);
+        $location_fields[]=$field('location_'.$key.'_path',$label.' — Đường dẫn','text',['wrapper'=>['width'=>'50'],'instructions'=>'Dùng liên kết tương đối bắt đầu bằng /, ví dụ /tong-quan/. Không nhập tên miền.']);
     }
     $location=$group('location','48 Trần Phú — Vị trí',$location_fields,$page('vi-tri'));
     $progress=$group('progress_page','48 Trần Phú — Trang tiến độ',[
@@ -160,3 +173,11 @@ add_filter('posts_clauses',function($clauses,$query) {
     $clauses['orderby']="COALESCE(STR_TO_DATE(REPLACE(NULLIF(tp48_dates.event_date,''),'-',''),'%Y%m%d'), DATE({$wpdb->posts}.post_date)) DESC, {$wpdb->posts}.post_date DESC, {$wpdb->posts}.ID DESC";
     return $clauses;
 },10,2);
+
+// Keep the location page's editable navigation on this site with relative paths.
+foreach (['overview','progress'] as $destination) {
+    add_filter('acf/validate_value/key=field_tp48_location_'.$destination.'_path',function($valid,$value) {
+        if ($valid!==true || $value==='') return $valid;
+        return preg_match('~^/(?!/)[^\\\\\s]*$~D',(string)$value) ? true:'Nhập đường dẫn tương đối bắt đầu bằng một dấu /, ví dụ /tong-quan/.';
+    },10,2);
+}
