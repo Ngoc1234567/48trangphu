@@ -5,6 +5,8 @@ get_header();
 $title=tp48_detail_field('overview_title') ?: 'Tổng quan dự án 48 Trần Phú Nha Trang';
 $photo=tp48_detail_field('overview_image');
 $photo_html=$photo ? tp48_home_image_html($photo):'';
+$photo_data=$photo_html ? tp48_home_image_data($photo):[];
+$photo_url=$photo_data ? (($photo_data['id'] ? wp_get_original_image_url($photo_data['id']):'') ?: $photo_data['url']):'';
 $rows=[];
 foreach (preg_split('/\R/u',(string)tp48_detail_field('overview_facts')) as $line) {
     $parts=explode(':',$line,2);
@@ -28,7 +30,7 @@ foreach (preg_split('/\R/u',(string)tp48_detail_field('overview_facts')) as $lin
 </dl>
 <?php endif; ?>
 <?php if ($photo_html): ?><figure class="overview-project-photo">
-<?php echo $photo_html; ?>
+<a class="overview-photo-open" href="<?php echo esc_url($photo_url); ?>" data-gallery-index="0" data-caption="<?php echo esc_attr(tp48_detail_field('overview_caption') ?: ($photo_data['alt'] ?? 'Ảnh thực tế dự án')); ?>" aria-label="Mở ảnh thực tế đầy đủ"><?php echo $photo_html; ?><span class="overview-photo-hint">Xem ảnh đầy đủ ↗</span></a>
 <?php if (tp48_detail_field('overview_caption')): ?><figcaption><?php echo nl2br(tp48_detail_text('overview_caption')); ?></figcaption><?php endif; ?>
 </figure><?php endif; ?>
 </div>
@@ -52,4 +54,5 @@ if (tp48_detail_field('overview_source_text') || (is_array($source) && !empty($s
 </nav>
 </div>
 </main>
+<?php if ($photo_html) get_template_part('template-parts/lightbox'); ?>
 <?php get_footer(); ?>

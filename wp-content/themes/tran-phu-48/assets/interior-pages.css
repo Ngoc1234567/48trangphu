@@ -106,3 +106,12 @@
  .overview-project-facts>div{grid-template-columns:minmax(0,1fr);gap:6px;padding:14px 0}
  .overview-actions{flex-direction:column;align-items:stretch}
 }
+
+.overview-photo-open{display:block;position:relative;cursor:zoom-in}
+.overview-photo-hint{position:absolute;right:12px;bottom:12px;padding:6px 10px;background:rgba(0,21,34,.8);color:#fff;font-size:13px;line-height:1.5}
+.lightbox button[hidden]{display:none}
+@media(max-width:700px){
+ .overview-page+.lightbox{width:calc(100% - 24px);max-height:calc(100dvh - 24px);padding:54px 12px 24px}
+ .overview-page+.lightbox figure img{height:auto;max-height:calc(100dvh - 180px);object-fit:contain}
+ .overview-page+.lightbox .lightbox-close{width:44px;height:44px}
+}
