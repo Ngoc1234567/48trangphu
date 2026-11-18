@@ -116,18 +116,19 @@
  .overview-page+.lightbox .lightbox-close{width:44px;height:44px}
 }
 
+/* Preserve the width/height aspect-ratio hint: sizes="auto" applies size containment. */
 /* Keep each location heading, image and copy together in normal document flow. */
-.location-page .location-view{display:flex;flex-direction:column;align-items:stretch;gap:20px}
+.location-page .location-view{display:flex;flex-direction:column;align-items:stretch;gap:12px}
 .location-page .location-view-title{margin:0;font-size:clamp(28px,3vw,42px);line-height:1.25;overflow-wrap:anywhere}
 .location-page .location-reference{display:block;position:static;min-width:0;min-height:0;margin:0;padding:0}
 .location-page .location-photo-open{display:block;position:relative;margin:0;padding:0;height:auto;min-height:0;line-height:0;cursor:zoom-in}
-.location-page .location-reference img{display:block;position:static;width:100%;height:auto;min-height:0;max-height:none;margin:0;padding:0;aspect-ratio:auto;object-fit:contain}
+.location-page .location-reference img{display:block;position:static;width:100%;height:auto;min-height:0;max-height:none;margin:0;padding:0;object-fit:contain}
 .location-page .location-photo-hint{position:absolute;right:12px;bottom:12px;padding:6px 10px;background:rgba(0,21,34,.8);color:#fff;font-size:13px;line-height:1.5}
 .location-page .location-view .entry-content{max-width:900px}
 .location-page .location-view .map-note{margin:0}
 .location-page .location-reference figcaption{padding:12px 0 0;white-space:normal;overflow-wrap:anywhere}
 .location-page .overview-actions{margin-bottom:0}
 @media(max-width:700px){
- .location-page .location-view{gap:16px}
+ .location-page .location-view{gap:12px}
  .location-page .overview-actions{flex-direction:column;align-items:stretch}
 }
