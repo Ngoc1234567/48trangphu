@@ -6,7 +6,6 @@ $query=trim((string)tp48_detail_field('map_query'));
 $map_url=esc_url_raw((string)tp48_detail_field('map_link'),['http','https']) ?: 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($query);
 ?>
 <main id="main" class="section-page location-page">
-<?php get_template_part('template-parts/page-heading'); ?>
 <section class="section-space ruled map-section" aria-labelledby="map-title">
 <div class="section-heading"><h2 id="map-title"><?php echo tp48_detail_text('location_heading'); ?></h2></div>
 <p class="location-relationship"><?php echo tp48_detail_text('location_relationship'); ?></p>
