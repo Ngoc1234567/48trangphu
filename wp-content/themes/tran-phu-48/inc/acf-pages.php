@@ -86,7 +86,7 @@ function tp48_interior_field_groups() {
         $field('overview_facts','2. Bảng thông tin dự án','textarea',['default_value'=>'','rows'=>10,'instructions'=>'Mỗi dòng một cặp Nhãn: Giá trị. Ví dụ định dạng: Địa chỉ: … Website tách ở dấu hai chấm đầu tiên. Để trống để ẩn bảng.']),
         $field('overview_image','2. Ảnh thực tế bên cạnh bảng','image',['instructions'=>'Máy tính: ảnh bên trái 45%. Điện thoại: ảnh sau bảng. Để trống để ẩn ảnh.']),
         $field('overview_caption','2. Chú thích ảnh thực tế','textarea',['default_value'=>'','rows'=>2]),
-        $field('overview_direction','3. Định hướng công trình','textarea',['rows'=>5,'instructions'=>'Nhập khối chữ ngắn theo file 01. Để trống để ẩn khối.']),
+        $field('overview_direction','3. Định hướng công trình','wysiwyg',['instructions'=>'Nhập khối chữ ngắn theo file 01. Bôi đen chữ rồi bấm biểu tượng liên kết hoặc Ctrl + K để chèn link. Để trống để ẩn khối.']),
         $field('overview_source_text','4. Dòng nguồn quy hoạch','textarea',['rows'=>2]),
         $field('overview_source_link','4. Liên kết nguồn quy hoạch','link',['return_format'=>'array','instructions'=>'Nhập URL và chữ liên kết. Luôn mở tab mới.']),
         $field('overview_actions_help','5. Nút điều hướng','message',['message'=>'Hai nút cố định: Khám phá vị trí → /vi-tri/ và Theo dõi tiến độ → /tien-do/.']),
