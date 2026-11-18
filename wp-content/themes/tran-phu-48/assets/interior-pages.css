@@ -67,3 +67,32 @@
 .entry-content .photo-credit>img{display:block;max-width:100%;height:auto;margin:0}
 .entry-content .photo-credit-label{position:absolute;right:10px;bottom:10px;padding:3px 6px;border-radius:2px;background:rgba(0,0,0,.35);color:#fff;font:500 12px/1.4 var(--sans);letter-spacing:.02em;text-shadow:0 1px 2px #000;pointer-events:none;user-select:none}
 @media(max-width:700px){.entry-content .photo-credit-label{right:7px;bottom:7px;font-size:10px}}
+
+/* Overview: compact introduction, project facts and a documentary photo. */
+.overview-page .overview-opening h1{font-size:clamp(30px,4vw,54px);line-height:1.2;text-wrap:balance;overflow-wrap:anywhere}
+.overview-intro{max-width:960px;margin-top:24px}
+.overview-project h2,.overview-direction h2{margin-bottom:26px}
+.overview-project-grid{display:grid;grid-template-columns:minmax(0,45fr) minmax(0,55fr);gap:clamp(20px,3vw,44px);align-items:start}
+.overview-project-facts{grid-column:2;grid-row:1;min-width:0;margin:0;border-top:1px solid var(--line)}
+.overview-project-facts>div{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.overview-project-facts dt{font-weight:600;color:var(--gold)}
+.overview-project-facts dd{margin:0}
+.overview-project-facts dt,.overview-project-facts dd{min-width:0;overflow-wrap:anywhere;line-height:1.7}
+.overview-project-photo{grid-column:1;grid-row:1;min-width:0;margin:0}
+.overview-project-photo img{display:block;width:100%;height:auto}
+.overview-project-photo figcaption{margin-top:12px;font-size:13px;line-height:1.7}
+.overview-project-single{grid-template-columns:minmax(0,1fr)}
+.overview-project-single>.overview-project-facts,.overview-project-single>.overview-project-photo{grid-column:1}
+.overview-direction .entry-content{max-width:960px}
+.overview-planning-source{font-size:14px;line-height:1.8;overflow-wrap:anywhere;margin:0 0 24px}
+.overview-planning-source a{text-decoration:underline;text-underline-offset:3px;margin-left:6px}
+.overview-actions{display:flex;flex-wrap:wrap;gap:16px}
+.overview-actions .button{margin:0;min-height:44px;text-align:center}
+@media(max-width:700px){
+ .overview-project-grid{grid-template-columns:minmax(0,1fr);gap:24px}
+ .overview-project-facts{grid-column:1;grid-row:1}
+ .overview-project-photo{grid-column:1;grid-row:2}
+ .overview-project-single>.overview-project-photo{grid-row:1}
+ .overview-project-facts>div{grid-template-columns:minmax(0,1fr);gap:6px;padding:14px 0}
+ .overview-actions{flex-direction:column;align-items:stretch}
+}

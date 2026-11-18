@@ -1,22 +1,55 @@
 <?php
 /* Template Name: Tổng quan */
 if (!defined('ABSPATH')) exit;
-get_header(); ?>
-<main id="main" class="section-page">
-<?php get_template_part('template-parts/page-heading');
-$cover=tp48_detail_field('overview_image');
-if (!$cover) $cover=has_post_thumbnail() ? get_post_thumbnail_id():tp48_home_field('hero','image');
+get_header();
+$title=tp48_detail_field('overview_title') ?: 'Tổng quan dự án 48 Trần Phú Nha Trang';
+$photo=tp48_detail_field('overview_image');
+$photo_html=$photo ? tp48_home_image_html($photo):'';
+$rows=[];
+foreach (preg_split('/\R/u',(string)tp48_detail_field('overview_facts')) as $line) {
+    $parts=explode(':',$line,2);
+    if (count($parts)===2 && trim($parts[0])!=='' && trim($parts[1])!=='') {
+        $rows[]=['label'=>trim($parts[0]),'value'=>trim($parts[1])];
+    }
+}
 ?>
-<figure class="overview-cover">
-<?php echo tp48_home_image_html($cover,'','',true); ?>
-<?php if (tp48_detail_field('overview_caption')): ?><figcaption class="hero-caption"><?php echo tp48_detail_text('overview_caption'); ?></figcaption><?php endif; ?>
-</figure>
-<section id="gia-tri-ben-vung" class="section-space intro-section ruled">
-<div><p class="eyebrow">Tổng quan dự án</p><h2><?php echo tp48_detail_text('overview_heading'); ?></h2><p class="muted">Nha Trang</p></div>
-<div><div class="entry-content page-body"><?php tp48_detail_body('overview_intro'); ?></div>
-<?php if (tp48_detail_field('overview_facts')): ?><div class="overview-facts"><h3>Thông tin đã xác nhận</h3><p><?php echo nl2br(tp48_detail_text('overview_facts')); ?></p></div><?php endif; ?>
-<?php $button=tp48_detail_field('overview_button'); if (!is_array($button)) $button=['url'=>tp48_page_url('vi-tri'),'title'=>'Khám phá vị trí']; ?>
-<?php if (tp48_home_link_attributes($button)): ?><a class="text-link" <?php echo tp48_home_link_attributes($button); ?>><?php echo esc_html($button['title'] ?? 'Khám phá vị trí'); ?> ↗</a><?php endif; ?>
-</div></section>
+<main id="main" class="section-page overview-page">
+<header class="page-heading overview-opening">
+<h1><?php echo esc_html($title); ?></h1>
+<?php if (tp48_detail_field('overview_intro')): ?><div class="entry-content overview-intro"><?php tp48_detail_body('overview_intro'); ?></div><?php endif; ?>
+</header>
+<?php if ($rows || $photo_html): ?>
+<section class="section-space ruled overview-project" aria-labelledby="overview-project-title">
+<h2 id="overview-project-title">Thông tin dự án</h2>
+<div class="overview-project-grid<?php echo !$photo_html || !$rows ? ' overview-project-single':''; ?>">
+<?php if ($rows): ?>
+<dl class="overview-project-facts">
+<?php foreach ($rows as $row): ?><div><dt><?php echo esc_html($row['label']); ?></dt><dd><?php echo esc_html($row['value']); ?></dd></div><?php endforeach; ?>
+</dl>
+<?php endif; ?>
+<?php if ($photo_html): ?><figure class="overview-project-photo">
+<?php echo $photo_html; ?>
+<?php if (tp48_detail_field('overview_caption')): ?><figcaption><?php echo nl2br(tp48_detail_text('overview_caption')); ?></figcaption><?php endif; ?>
+</figure><?php endif; ?>
+</div>
+</section>
+<?php endif; ?>
+<?php if (tp48_detail_field('overview_direction')): ?>
+<section class="section-space ruled overview-direction" aria-labelledby="overview-direction-title">
+<h2 id="overview-direction-title">Định hướng công trình</h2>
+<div class="entry-content"><?php tp48_detail_body('overview_direction'); ?></div>
+</section>
+<?php endif; ?>
+<div class="section-space ruled overview-closing">
+<?php $source=tp48_detail_field('overview_source_link');
+if (tp48_detail_field('overview_source_text') || (is_array($source) && !empty($source['url']))): ?>
+<p class="overview-planning-source"><?php echo nl2br(tp48_detail_text('overview_source_text')); ?>
+<?php if (is_array($source) && !empty($source['url'])): ?><a href="<?php echo esc_url($source['url']); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html(!empty($source['title']) ? $source['title']:'Xem nguồn quy hoạch'); ?><span class="sr-only"> (mở tab mới)</span></a><?php endif; ?>
+</p><?php endif; ?>
+<nav class="overview-actions" aria-label="Tìm hiểu dự án">
+<a class="button outline" href="<?php echo esc_url(tp48_page_url('vi-tri')); ?>">Khám phá vị trí</a>
+<a class="button outline" href="<?php echo esc_url(tp48_page_url('tien-do')); ?>">Theo dõi tiến độ</a>
+</nav>
+</div>
 </main>
 <?php get_footer(); ?>

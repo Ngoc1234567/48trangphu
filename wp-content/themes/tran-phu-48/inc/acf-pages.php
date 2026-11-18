@@ -5,9 +5,9 @@ if (!defined('ABSPATH')) exit;
 function tp48_detail_defaults() {
     return [
         'overview_heading'=>'Dự án tại 48 Trần Phú',
-        'overview_facts'=>"Địa chỉ: 48 Trần Phú, Nha Trang.\nVị trí: đối diện Quảng trường 2/4, gần Tháp Trầm Hương.",
-        'overview_intro'=>'Website giới thiệu thông tin về dự án tại 48 Trần Phú, Nha Trang; tập hợp nội dung tổng quan, vị trí và các cập nhật về tiến độ công trình. Thông tin chi tiết sẽ được bổ sung khi có tài liệu chính thức được xác nhận.',
-        'overview_caption'=>'Hình ảnh minh họa ý tưởng, không phải phối cảnh chính thức của dự án.',
+        'overview_facts'=>'',
+        'overview_intro'=>'',
+        'overview_caption'=>'',
         'location_heading'=>'48 Trần Phú · Nha Trang',
         'location_relationship'=>'48 Trần Phú đối diện Quảng trường 2/4, gần Tháp Trầm Hương.',
         'map_query'=>'48 Tran Phu Nha Trang',
@@ -81,10 +81,15 @@ function tp48_interior_field_groups() {
     $group=function($slug,$title,$fields,$location) { return ['key'=>'group_tp48_'.$slug,'title'=>$title,'fields'=>$fields,'location'=>$location,'position'=>'normal','style'=>'default','active'=>true,'description'=>'Chỉnh nội dung hiển thị trực tiếp trên website. Chỉ dùng thông tin và hình ảnh đã xác nhận.']; };
     $page=function($slug) { return [[['param'=>'page_template','operator'=>'==','value'=>'page-templates/'.$slug.'.php']]]; };
     $overview=$group('overview','48 Trần Phú — Tổng quan',[
-        $field('overview_image','Ảnh lớn','image'),$field('overview_caption','Chú thích dưới ảnh','textarea'),
-        $field('overview_heading','Tiêu đề giới thiệu'),$field('overview_intro','Giới thiệu ngắn','wysiwyg'),
-        $field('overview_facts','Thông tin đã xác nhận','textarea',['instructions'=>'Chỉ nhập các thông tin đã xác nhận; mỗi ý một dòng. Để trống để ẩn mục này.']),
-        $field('overview_button','Liên kết khám phá vị trí','link',['return_format'=>'array']),
+        $field('overview_title','1. Tiêu đề đầu trang (H1)','text',['default_value'=>'Tổng quan dự án 48 Trần Phú Nha Trang']),
+        $field('overview_intro','1. Giới thiệu ngay dưới H1','textarea',['default_value'=>'','rows'=>5,'instructions'=>'Nhập đoạn giới thiệu theo file 01.']),
+        $field('overview_facts','2. Bảng thông tin dự án','textarea',['default_value'=>'','rows'=>10,'instructions'=>'Mỗi dòng một cặp Nhãn: Giá trị. Ví dụ định dạng: Địa chỉ: … Website tách ở dấu hai chấm đầu tiên. Để trống để ẩn bảng.']),
+        $field('overview_image','2. Ảnh thực tế bên cạnh bảng','image',['instructions'=>'Máy tính: ảnh bên trái 45%. Điện thoại: ảnh sau bảng. Để trống để ẩn ảnh.']),
+        $field('overview_caption','2. Chú thích ảnh thực tế','textarea',['default_value'=>'','rows'=>2]),
+        $field('overview_direction','3. Định hướng công trình','textarea',['rows'=>5,'instructions'=>'Nhập khối chữ ngắn theo file 01. Để trống để ẩn khối.']),
+        $field('overview_source_text','4. Dòng nguồn quy hoạch','textarea',['rows'=>2]),
+        $field('overview_source_link','4. Liên kết nguồn quy hoạch','link',['return_format'=>'array','instructions'=>'Nhập URL và chữ liên kết. Luôn mở tab mới.']),
+        $field('overview_actions_help','5. Nút điều hướng','message',['message'=>'Hai nút cố định: Khám phá vị trí → /vi-tri/ và Theo dõi tiến độ → /tien-do/.']),
     ],$page('tong-quan'));
     $location_fields=[
         $field('location_relationship','Vị trí và các điểm lân cận','textarea'),
