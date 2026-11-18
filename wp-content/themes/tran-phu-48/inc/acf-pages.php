@@ -40,7 +40,20 @@ function tp48_detail_field($name,$id=0) {
     return tp48_detail_defaults()[$name] ?? '';
 }
 function tp48_detail_text($name,$id=0) { return esc_html((string)tp48_detail_field($name,$id)); }
-function tp48_detail_body($name,$id=0) { echo wp_kses_post(wpautop((string)tp48_detail_field($name,$id))); }
+function tp48_detail_body($name,$id=0) {
+    $html=wp_kses_post(wpautop((string)tp48_detail_field($name,$id)));
+    if ($name==='overview_direction') {
+        $processor=new WP_HTML_Tag_Processor($html);
+        while ($processor->next_tag('A')) {
+            if (!$processor->get_attribute('href')) continue;
+            $processor->set_attribute('target','_blank');
+            $rel=preg_split('/\s+/',trim((string)$processor->get_attribute('rel')),-1,PREG_SPLIT_NO_EMPTY);
+            $processor->set_attribute('rel',implode(' ',array_unique(array_merge($rel,['noopener','noreferrer']))));
+        }
+        $html=$processor->get_updated_html();
+    }
+    echo $html;
+}
 function tp48_progress_youtube_embed($url) {
     $parts=wp_parse_url($url);
     if (!$parts || !in_array(strtolower($parts['scheme'] ?? ''),['http','https'],true)) return '';
