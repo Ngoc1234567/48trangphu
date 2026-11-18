@@ -27,12 +27,12 @@ foreach (['corner','sea'] as $view):
     if (!$heading && !$photo_data && !tp48_detail_field($prefix.'_description') && !$note) continue;
 ?>
 <section class="section-space ruled location-view" aria-label="<?php echo esc_attr($heading ?: 'Ảnh vị trí'); ?>">
-<?php if ($heading): ?><div class="section-heading"><h2><?php echo esc_html($heading); ?></h2></div><?php endif; ?>
+<?php if ($heading): ?><h2 class="location-view-title"><?php echo esc_html($heading); ?></h2><?php endif; ?>
 <?php if ($photo_data): ?>
 <figure class="location-reference">
-<a class="overview-photo-open" href="<?php echo esc_url($photo_url); ?>" data-gallery-index="<?php echo (int)$gallery_index++; ?>" data-caption="<?php echo esc_attr($caption); ?>" aria-label="<?php echo esc_attr('Mở ảnh đầy đủ: '.($heading ?: $photo_data['alt'])); ?>">
+<a class="location-photo-open" href="<?php echo esc_url($photo_url); ?>" data-gallery-index="<?php echo (int)$gallery_index++; ?>" data-caption="<?php echo esc_attr($caption); ?>" aria-label="<?php echo esc_attr('Mở ảnh đầy đủ: '.($heading ?: $photo_data['alt'])); ?>">
 <?php echo tp48_home_image_html($photo,(string)tp48_detail_field($prefix.'_alt')); ?>
-<span class="overview-photo-hint">Xem ảnh đầy đủ ↗</span>
+<span class="location-photo-hint">Xem ảnh đầy đủ ↗</span>
 </a>
 <?php if ($caption): ?><figcaption><?php echo nl2br(esc_html($caption)); ?></figcaption><?php endif; ?>
 </figure>
