@@ -21,8 +21,10 @@ function tp48_detail_defaults() {
         'location_overview_path'=>'/tong-quan/',
         'location_progress_label'=>'Theo dõi tiến độ',
         'location_progress_path'=>'/tien-do/',
+        'progress_title'=>'Tiến độ dự án 48 Trần Phú Nha Trang',
         'progress_heading'=>'Tiến độ công trình',
-        'progress_intro'=>'Các cập nhật và hình ảnh được đăng tải khi có thông tin xác nhận.',
+        'progress_intro'=>'',
+        'update_button_label'=>'Xem chi tiết',
         'progress_empty'=>'Chưa có bản cập nhật tiến độ được xác nhận. Các bản cập nhật sẽ được xếp mới nhất lên đầu, kèm ngày cập nhật, ảnh hoặc video và mô tả ngắn.',
         'progress_show_preview'=>1,
         'information_status'=>'waiting',
@@ -131,8 +133,10 @@ function tp48_interior_field_groups() {
     }
     $location=$group('location','48 Trần Phú — Vị trí',$location_fields,$page('vi-tri'));
     $progress=$group('progress_page','48 Trần Phú — Trang tiến độ',[
-        $field('progress_heading','Tiêu đề danh sách'),$field('progress_intro','Giới thiệu','textarea'),
-        $field('progress_empty','Thông báo khi chưa có cập nhật','textarea'),$field('progress_show_preview','Hiện khung mẫu khi chưa có cập nhật','true_false',['ui'=>1]),
+        $field('progress_title','1. Tiêu đề đầu trang (H1)'),
+        $field('progress_intro','1. Giới thiệu ngay dưới H1','textarea',['rows'=>5,'instructions'=>'Dán đoạn giới thiệu trong file 01-NOI-DUNG-DANG-WEB.txt.']),
+        $field('progress_updates_help','2. Các bản cập nhật','message',['message'=>'Vào menu Tiến độ → Thêm cập nhật tiến độ để nhập từng bản cập nhật. Chọn ngày trong tháng 11/2026 cho khối tháng 11/2026. Website tự hiện nhãn tháng theo ngày cập nhật và xếp mới nhất trước. Máy tính: ảnh trái, nội dung phải. Điện thoại: ảnh trên, nội dung dưới. Nút Xem chi tiết mở bài cập nhật tương ứng.']),
+        $field('progress_empty','Thông báo khi chưa có cập nhật','textarea'),
     ],$page('tien-do'));
     $information=$group('information','48 Trần Phú — Mặt bằng / Tiện ích',[
         $field('information_status','Trạng thái nội dung','select',['choices'=>['waiting'=>'Chờ thông tin chính thức','ready'=>'Đã có thông tin chính thức'],'allow_null'=>0]),
@@ -147,10 +151,12 @@ function tp48_interior_field_groups() {
     $update=$group('progress_update','48 Trần Phú — Bản cập nhật tiến độ',[
         $field('update_is_demo','Video / nội dung mẫu để duyệt bố cục','true_false',['ui'=>1,'instructions'=>'Bật để hiện nhãn rõ đây là nội dung mẫu, không phải tiến độ thực tế.']),
         $field('update_date','Ngày cập nhật','date_picker',['display_format'=>'d/m/Y','return_format'=>'Y-m-d','instructions'=>'Để trống dùng ngày đăng. Danh sách xếp theo ngày cập nhật mới nhất.']),
-        $field('update_image','Ảnh công trình','image'),
+        $field('update_title','Tiêu đề khối cập nhật (H2)','text',['instructions'=>'Để trống dùng tiêu đề bài cập nhật ở phía trên.']),
+        $field('update_image','Ảnh công trình','image',['instructions'=>'Hiện bên trái trên máy tính, bên trên trên điện thoại. Danh sách ưu tiên ảnh này; video vẫn hiển thị trong trang chi tiết.']),
         $field('update_video','Video công trình (MP4 / WebM)','file',['return_format'=>'id','mime_types'=>'mp4,webm','required'=>0,'instructions'=>'Tải file hoặc nhập URL video bên dưới, chỉ cần một trong hai. Khi có cả ảnh và video, ảnh dùng làm ảnh đại diện video.']),
         $field('update_video_url','URL video công trình (YouTube / MP4 / WebM)','url',['required'=>0,'instructions'=>'Nhập link YouTube (bao gồm Shorts, youtu.be) hoặc liên kết trực tiếp đến video MP4 / WebM. Có URL thì không cần tải file; có file thì có thể để trống URL. Nếu có cả hai, ưu tiên URL.']),
         $field('update_description','Mô tả ngắn','textarea',['rows'=>4]),
+        $field('update_button_label','Chữ trên nút xem chi tiết'),
     ],[[['param'=>'post_type','operator'=>'==','value'=>'tp48_journal']]]);
     $contact=$group('contact_page','48 Trần Phú — Liên hệ',[
         $field('contact_heading','Tiêu đề form'),$field('contact_intro','Giới thiệu form','textarea'),
