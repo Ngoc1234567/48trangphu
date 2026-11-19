@@ -175,3 +175,24 @@ html{scroll-behavior:smooth}
  .home-page .journal-copy p{display:block;margin:0 0 8px;font-size:14px;line-height:1.6}
  .home-page .journal-copy .text-link{position:static;opacity:1;font-size:11px;min-height:44px;margin-top:8px}
 }
+
+/* Identity banner: wide desktop image, separate copy above the photo on phones. */
+.home-page .identity{display:flex;align-items:center;width:100%;height:auto;min-height:0;max-height:none;aspect-ratio:4/1}
+.home-page .identity-picture{position:absolute;inset:0;z-index:-2;display:block}
+.home-page .identity-picture img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.home-page .identity:after{background:linear-gradient(90deg,rgba(3,28,43,.72),rgba(3,28,43,.4) 45%,transparent 85%)}
+.home-page .identity-copy{width:100%;max-width:none;padding:32px 9%}
+.home-page .identity p{max-width:none;font-size:clamp(14px,1.25vw,20px);line-height:1.6}
+.home-page .identity .identity-description-mobile{display:none}
+@media(max-width:700px){
+ .home-page .identity{display:flex;flex-direction:column;align-items:stretch;aspect-ratio:auto}
+ .home-page .identity:after{display:none}
+ .home-page .identity-copy{order:0;padding:28px 24px;background:var(--deep)}
+ .home-page .identity h2{font-size:clamp(23px,6vw,30px);line-height:1.3;white-space:normal;text-wrap:balance;overflow-wrap:anywhere}
+ .home-page .identity .short-line{margin:16px 0}
+ .home-page .identity .identity-description-desktop{display:none}
+ .home-page .identity .identity-description-mobile{display:block;font-size:15px;line-height:1.7}
+ .home-page .identity-description-part{display:inline-block;max-width:100%}
+ .home-page .identity-picture{position:static;order:1;z-index:auto;width:100%}
+ .home-page .identity-picture img{width:100%;height:auto;object-fit:contain}
+}

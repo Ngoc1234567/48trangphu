@@ -1346,11 +1346,36 @@
                 },
                 {
                     "key": "field_tp48_home_identity_image",
-                    "label": "Ảnh nền",
+                    "label": "Ảnh banner máy tính",
                     "name": "image",
                     "aria-label": "",
                     "type": "image",
-                    "instructions": "",
+                    "instructions": "Chọn gia-long-pho-bien-desktop.webp — 1920 × 480 px (4:1). Banner toàn chiều rộng, cao 360 px ở màn hình 1440 px.",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "min_width": 0,
+                    "min_height": 0,
+                    "min_size": 0,
+                    "max_width": 0,
+                    "max_height": 0,
+                    "max_size": 0,
+                    "mime_types": ""
+                },
+                {
+                    "key": "field_tp48_home_identity_mobile_image",
+                    "label": "Ảnh banner điện thoại",
+                    "name": "mobile_image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Chọn gia-long-pho-bien-mobile.webp — 960 × 540 px (16:9). Ảnh hiển thị nguyên tỷ lệ bên dưới khối chữ. Để trống dùng ảnh máy tính.",
                     "required": false,
                     "conditional_logic": false,
                     "wrapper": {
@@ -1415,7 +1440,27 @@
                     "name": "description",
                     "aria-label": "",
                     "type": "textarea",
-                    "instructions": "",
+                    "instructions": "Mô tả trên máy tính. Tại màn hình 1440 px, vùng chữ được nới để câu mô tả nằm trên một dòng. Không cần chèn xuống dòng.",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "rows": 3,
+                    "new_lines": "",
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_tp48_home_identity_mobile_description",
+                    "label": "Mô tả riêng trên điện thoại (tùy chọn)",
+                    "name": "mobile_description",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Để trống để dùng mô tả chung và ưu tiên ngắt sau “Biển phía trước.” khi cần hai dòng. Có thể nhập riêng và nhấn Enter sau “Biển phía trước.” để cố định vị trí ngắt dòng.",
                     "required": false,
                     "conditional_logic": false,
                     "wrapper": {
@@ -2263,5 +2308,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1794123247
+    "modified": 1795083021
 }
