@@ -15,7 +15,7 @@ $updates=new WP_Query(['post_type'=>'tp48_journal','post_status'=>'publish','pos
 <?php if (tp48_detail_field('update_is_demo')): ?><p class="demo-notice">Nội dung mẫu để duyệt bố cục — không phản ánh tiến độ thực tế của dự án.</p><?php endif; ?>
 <h2><a href="<?php the_permalink(); ?>"><?php echo esc_html(tp48_detail_field('update_title') ?: get_the_title()); ?></a></h2>
 <div class="progress-summary"><?php tp48_progress_summary(); ?></div>
-<a class="button outline" href="<?php the_permalink(); ?>"><?php echo esc_html(tp48_detail_field('update_button_label') ?: 'Xem cập nhật chi tiết'); ?> <span aria-hidden="true">↗</span></a>
+<a class="button outline" href="<?php the_permalink(); ?>"><?php echo esc_html(tp48_detail_field('update_button_label') ?: 'Xem cập nhật chi tiết'); ?> <span aria-hidden="true">→</span></a>
 </div></article>
 <?php endwhile; else: ?>
 <div class="pending-information"><p class="eyebrow">Chờ cập nhật chính thức</p><h3><?php echo tp48_detail_text('progress_heading',$page_id); ?></h3><p><?php echo nl2br(tp48_detail_text('progress_empty',$page_id)); ?></p></div>
