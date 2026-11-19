@@ -24,7 +24,7 @@ function tp48_detail_defaults() {
         'progress_title'=>'Tiến độ dự án 48 Trần Phú Nha Trang',
         'progress_heading'=>'Tiến độ công trình',
         'progress_intro'=>'',
-        'update_button_label'=>'Xem chi tiết',
+        'update_button_label'=>'Xem cập nhật chi tiết',
         'progress_empty'=>'Chưa có bản cập nhật tiến độ được xác nhận. Các bản cập nhật sẽ được xếp mới nhất lên đầu, kèm ngày cập nhật, ảnh hoặc video và mô tả ngắn.',
         'progress_show_preview'=>1,
         'information_status'=>'waiting',
@@ -153,8 +153,10 @@ function tp48_interior_field_groups() {
         $field('update_date','Ngày cập nhật','date_picker',['display_format'=>'d/m/Y','return_format'=>'Y-m-d','instructions'=>'Để trống dùng ngày đăng. Danh sách xếp theo ngày cập nhật mới nhất.']),
         $field('update_title','Tiêu đề khối cập nhật (H2)','text',['instructions'=>'Để trống dùng tiêu đề bài cập nhật ở phía trên.']),
         $field('update_image','Ảnh công trình','image',['instructions'=>'Hiện bên trái trên máy tính, bên trên trên điện thoại. Danh sách ưu tiên ảnh này; video vẫn hiển thị trong trang chi tiết.']),
+        $field('update_image_alt','ALT — mô tả ảnh','text',['instructions'=>'Để trống dùng ALT trong Thư viện. Ví dụ: Công trường dự án 48 Trần Phú Nha Trang tháng 11/2026.']),
+        $field('update_image_caption','Chú thích ngay dưới ảnh','textarea',['rows'=>3,'instructions'=>'Dán chú thích ảnh trong file nội dung. Để trống để ẩn.']),
         $field('update_video','Video công trình (MP4 / WebM)','file',['return_format'=>'id','mime_types'=>'mp4,webm','required'=>0,'instructions'=>'Tải file hoặc nhập URL video bên dưới, chỉ cần một trong hai. Khi có cả ảnh và video, ảnh dùng làm ảnh đại diện video.']),
-        $field('update_video_url','URL video công trình (YouTube / MP4 / WebM)','url',['required'=>0,'instructions'=>'Nhập link YouTube (bao gồm Shorts, youtu.be) hoặc liên kết trực tiếp đến video MP4 / WebM. Có URL thì không cần tải file; có file thì có thể để trống URL. Nếu có cả hai, ưu tiên URL.']),
+        $field('update_video_url','URL video công trình (YouTube / MP4 / WebM)','url',['required'=>0,'instructions'=>'Nhập link YouTube (bao gồm Shorts, youtu.be) hoặc liên kết trực tiếp đến video MP4 / WebM. Trang danh sách chỉ tải ảnh tĩnh và hiện nút “Xem video công trường” mở video trong tab mới. Nếu có cả file và URL, ưu tiên URL.']),
         $field('update_description','Mô tả ngắn','textarea',['rows'=>4]),
         $field('update_button_label','Chữ trên nút xem chi tiết'),
     ],[[['param'=>'post_type','operator'=>'==','value'=>'tp48_journal']]]);
@@ -166,6 +168,12 @@ function tp48_interior_field_groups() {
 add_action('acf/init',function() {
     if (function_exists('acf_add_local_field_group')) foreach (tp48_interior_field_groups() as $group) acf_add_local_field_group($group);
 });
+// Use the selected progress photo as the featured image only when none exists.
+add_action('acf/save_post',function($post_id) {
+    if (!is_numeric($post_id) || get_post_type((int)$post_id)!=='tp48_journal' || has_post_thumbnail((int)$post_id)) return;
+    $image=absint(get_post_meta((int)$post_id,'tp48_update_image',true));
+    if ($image && wp_attachment_is_image($image)) set_post_thumbnail((int)$post_id,$image);
+},20);
 add_filter('acf/update_value/key=field_tp48_update_date',function($value) {
     if (!$value) return '';
     $timestamp=strtotime((string)$value);
