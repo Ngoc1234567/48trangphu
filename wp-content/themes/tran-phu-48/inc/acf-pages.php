@@ -43,6 +43,20 @@ function tp48_detail_field($name,$id=0) {
     return tp48_detail_defaults()[$name] ?? '';
 }
 function tp48_detail_text($name,$id=0) { return esc_html((string)tp48_detail_field($name,$id)); }
+function tp48_map_embed_url($value) {
+    $value=trim((string)$value);
+    if (strpos($value,'<')!==false) {
+        $processor=new WP_HTML_Tag_Processor($value);
+        $value=$processor->next_tag('IFRAME') ? (string)$processor->get_attribute('src'):'';
+    }
+    $url=esc_url_raw(html_entity_decode($value,ENT_QUOTES,'UTF-8'),['https']);
+    $parts=wp_parse_url($url);
+    if (!$parts || ($parts['scheme'] ?? '')!=='https'
+        || !in_array(strtolower($parts['host'] ?? ''),['www.google.com','google.com'],true)
+        || !preg_match('~^/maps/embed(?:/|$)~',$parts['path'] ?? '')
+        || isset($parts['user']) || isset($parts['pass']) || isset($parts['port'])) return '';
+    return $url;
+}
 function tp48_detail_body($name,$id=0) {
     $html=wp_kses_post(wpautop((string)tp48_detail_field($name,$id)));
     if ($name==='overview_direction') {
@@ -113,8 +127,9 @@ function tp48_interior_field_groups() {
         $field('location_heading','Tiêu đề phần bản đồ'),
         $field('location_relationship','Giới thiệu vị trí','textarea',['rows'=>3]),
         $field('map_query','Địa chỉ tìm trên Google Maps','text',['instructions'=>'Nhập địa chỉ hoặc tên địa điểm; website tự tạo bản đồ. Không nhập mã iframe.']),
-        $field('map_zoom','Độ zoom bản đồ','number',['min'=>1,'max'=>21,'step'=>1,'instructions'=>'Từ 1 đến 21. Số càng lớn càng phóng gần; số càng nhỏ càng nhìn rộng. Mặc định 14. Để trống dùng mặc định.']),
-        $field('map_link','Link ghim Google Maps','url',['instructions'=>'Dán link ghim chính xác. Để trống dùng tìm kiếm theo địa chỉ ở trên.']),
+        $field('map_embed','Bản đồ Google Maps nhúng','textarea',['rows'=>3,'instructions'=>'Trên Google Maps máy tính, chọn đúng ghim → Chia sẻ → Nhúng bản đồ → Sao chép HTML, rồi dán toàn bộ vào đây (hoặc dán URL https://www.google.com/maps/embed?...). Bản đồ ưu tiên mã này để giữ đúng vị trí. Không dùng link chia sẻ rút gọn. Để trống dùng địa chỉ tìm ở trên.']),
+        $field('map_zoom','Độ zoom bản đồ','number',['min'=>1,'max'=>21,'step'=>1,'instructions'=>'Từ 1 đến 21. Số càng lớn càng phóng gần; số càng nhỏ càng nhìn rộng. Mặc định 14. Chỉ áp dụng khi không dùng bản đồ nhúng; bản đồ nhúng dùng mức zoom trong mã Google Maps.']),
+        $field('map_link','Link ghim Google Maps','url',['instructions'=>'Dùng cho nút Mở Google Maps bên dưới bản đồ; không quyết định vị trí của bản đồ nhúng. Để trống dùng bản đồ nhúng hoặc tìm kiếm theo địa chỉ ở trên.']),
         $field('map_note','Chú thích bản đồ','textarea',['rows'=>2]),
     ];
     foreach (['corner'=>['2. Góc giao hai đường','01-goc-giao-hai-duong.webp','Giữ cả hai nhãn tên đường trên ảnh. Ảnh hiển thị nguyên tỷ lệ, không cắt khung.'],
@@ -170,6 +185,10 @@ function tp48_interior_field_groups() {
 add_action('acf/init',function() {
     if (function_exists('acf_add_local_field_group')) foreach (tp48_interior_field_groups() as $group) acf_add_local_field_group($group);
 });
+add_filter('acf/validate_value/key=field_tp48_map_embed',function($valid,$value) {
+    if ($valid!==true || trim((string)$value)==='') return $valid;
+    return tp48_map_embed_url($value) ? true:'Vui lòng dán mã iframe hoặc URL từ Google Maps → Chia sẻ → Nhúng bản đồ (https://www.google.com/maps/embed?...).';
+},10,2);
 // Use the selected progress photo as the featured image only when none exists.
 add_action('acf/save_post',function($post_id) {
     if (!is_numeric($post_id) || get_post_type((int)$post_id)!=='tp48_journal' || has_post_thumbnail((int)$post_id)) return;

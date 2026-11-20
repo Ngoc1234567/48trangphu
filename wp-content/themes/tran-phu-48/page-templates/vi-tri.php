@@ -5,14 +5,16 @@ get_header();
 $query=trim((string)tp48_detail_field('map_query'));
 $map_zoom=tp48_detail_field('map_zoom');
 $map_zoom=is_numeric($map_zoom) ? max(1,min(21,(int)$map_zoom)):14;
-$map_url=esc_url_raw((string)tp48_detail_field('map_link'),['http','https']) ?: 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($query);
+$map_embed=tp48_map_embed_url(tp48_detail_field('map_embed'));
+$map_src=$map_embed ?: ($query ? 'https://www.google.com/maps?q='.rawurlencode($query).'&z='.$map_zoom.'&output=embed':'');
+$map_url=esc_url_raw((string)tp48_detail_field('map_link'),['http','https']) ?: ($map_embed ?: 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($query));
 ?>
 <main id="main" class="section-page location-page">
 <section class="section-space ruled map-section" aria-labelledby="map-title">
 <div class="section-heading"><h2 id="map-title"><?php echo tp48_detail_text('location_heading'); ?></h2></div>
 <p class="location-relationship"><?php echo tp48_detail_text('location_relationship'); ?></p>
-<?php if ($query): ?>
-<iframe class="location-map" title="<?php echo esc_attr('Bản đồ: '.$query); ?>" src="<?php echo esc_url('https://www.google.com/maps?q='.rawurlencode($query).'&z='.$map_zoom.'&output=embed'); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<?php if ($map_src): ?>
+<iframe class="location-map" title="<?php echo esc_attr($query ? 'Bản đồ: '.$query:'Bản đồ vị trí dự án'); ?>" src="<?php echo esc_url($map_src); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 <p class="muted map-note"><?php echo tp48_detail_text('map_note'); ?> <a class="text-link" href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener noreferrer">Mở Google Maps ↗</a></p>
 <?php endif; ?>
 </section>
