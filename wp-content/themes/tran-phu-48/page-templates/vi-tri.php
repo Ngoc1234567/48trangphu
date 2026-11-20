@@ -3,6 +3,8 @@
 if (!defined('ABSPATH')) exit;
 get_header();
 $query=trim((string)tp48_detail_field('map_query'));
+$map_zoom=tp48_detail_field('map_zoom');
+$map_zoom=is_numeric($map_zoom) ? max(1,min(21,(int)$map_zoom)):14;
 $map_url=esc_url_raw((string)tp48_detail_field('map_link'),['http','https']) ?: 'https://www.google.com/maps/search/?api=1&query='.rawurlencode($query);
 ?>
 <main id="main" class="section-page location-page">
@@ -10,7 +12,7 @@ $map_url=esc_url_raw((string)tp48_detail_field('map_link'),['http','https']) ?: 
 <div class="section-heading"><h2 id="map-title"><?php echo tp48_detail_text('location_heading'); ?></h2></div>
 <p class="location-relationship"><?php echo tp48_detail_text('location_relationship'); ?></p>
 <?php if ($query): ?>
-<iframe class="location-map" title="<?php echo esc_attr('Bản đồ: '.$query); ?>" src="<?php echo esc_url('https://www.google.com/maps?q='.rawurlencode($query).'&output=embed'); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<iframe class="location-map" title="<?php echo esc_attr('Bản đồ: '.$query); ?>" src="<?php echo esc_url('https://www.google.com/maps?q='.rawurlencode($query).'&z='.$map_zoom.'&output=embed'); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 <p class="muted map-note"><?php echo tp48_detail_text('map_note'); ?> <a class="text-link" href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener noreferrer">Mở Google Maps ↗</a></p>
 <?php endif; ?>
 </section>

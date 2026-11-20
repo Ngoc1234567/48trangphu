@@ -11,6 +11,7 @@ function tp48_detail_defaults() {
         'location_heading'=>'48 Trần Phú · Nha Trang',
         'location_relationship'=>'48 Trần Phú đối diện Quảng trường 2/4, gần Tháp Trầm Hương.',
         'map_query'=>'48 Tran Phu Nha Trang',
+        'map_zoom'=>14,
         'map_note'=>'Bản đồ tra cứu khu vực, không thể hiện ranh giới pháp lý của dự án.',
         'location_corner_heading'=>'Hai mặt đường tại góc giao trung tâm',
         'location_corner_alt'=>'Khu đất 48 Trần Phú tại góc giao Nguyễn Thị Minh Khai nhìn từ trên cao.',
@@ -112,6 +113,7 @@ function tp48_interior_field_groups() {
         $field('location_heading','Tiêu đề phần bản đồ'),
         $field('location_relationship','Giới thiệu vị trí','textarea',['rows'=>3]),
         $field('map_query','Địa chỉ tìm trên Google Maps','text',['instructions'=>'Nhập địa chỉ hoặc tên địa điểm; website tự tạo bản đồ. Không nhập mã iframe.']),
+        $field('map_zoom','Độ zoom bản đồ','number',['min'=>1,'max'=>21,'step'=>1,'instructions'=>'Từ 1 đến 21. Số càng lớn càng phóng gần; số càng nhỏ càng nhìn rộng. Mặc định 14. Để trống dùng mặc định.']),
         $field('map_link','Link ghim Google Maps','url',['instructions'=>'Dán link ghim chính xác. Để trống dùng tìm kiếm theo địa chỉ ở trên.']),
         $field('map_note','Chú thích bản đồ','textarea',['rows'=>2]),
     ];
