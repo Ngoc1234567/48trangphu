@@ -1645,6 +1645,26 @@
                     "bidirectional_target": []
                 },
                 {
+                    "key": "field_tp48_home_gallery_third_image_caption",
+                    "label": "Chú thích dưới ảnh số 3",
+                    "name": "third_image_caption",
+                    "aria-label": "",
+                    "type": "textarea",
+                    "instructions": "Hiện ngay dưới ảnh thứ 3 trong danh sách ảnh đã chọn, bên ngoài khung ảnh, trên máy tính và điện thoại. Để trống để ẩn.",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "rows": 2,
+                    "new_lines": "",
+                    "default_value": "Mô phỏng ý tưởng — không phải phối cảnh chính thức",
+                    "maxlength": "",
+                    "placeholder": ""
+                },
+                {
                     "key": "field_tp48_home_gallery_empty_message",
                     "label": "Thông báo khi chưa có ảnh",
                     "name": "empty_message",
@@ -2308,5 +2328,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1795083021
+    "modified": 1795163161
 }
