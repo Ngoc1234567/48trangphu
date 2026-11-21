@@ -31,6 +31,10 @@ function tp48_cf7_home_text($name,$id) {
     return is_scalar($value) ? trim(wp_strip_all_tags((string)$value)):'';
 }
 add_filter('wpcf7_form_tag',function ($tag,$replace) {
+    if ($replace && is_page_template('page-templates/lien-he.php') && tp48_is_cf7_form(wpcf7_get_current_contact_form()) && ($tag['basetype'] ?? '')==='submit') {
+        $label='Nhận cập nhật';
+        $tag['values']=[$label];$tag['labels']=[$label];$tag['raw_values']=[$label];
+    }
     $id=$replace ? tp48_cf7_home_id():0;
     if (!$id) return $tag;
     $fields=['full-name'=>'name_label','phone'=>'phone_label','email'=>'email_label'];
