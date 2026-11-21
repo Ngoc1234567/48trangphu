@@ -77,7 +77,7 @@ add_action('after_switch_theme',function () { update_option('tp48_flush_rewrite'
 add_action('init',function () { if (get_option('tp48_flush_rewrite')) { flush_rewrite_rules(false); delete_option('tp48_flush_rewrite'); } },20);
 add_action('template_redirect',function () {
     if (is_preview()) return;
-    $legacy=['dau-an'=>tp48_page_url('tong-quan'),'nhat-ky'=>tp48_page_url('tien-do'),'hinh-anh'=>tp48_page_url('tong-quan').'#hinh-anh'];
+    $legacy=['dau-an'=>tp48_page_url('tong-quan'),'nhat-ky'=>tp48_page_url('tien-do')];
     foreach ($legacy as $slug=>$target) if (is_page($slug)) { wp_safe_redirect($target,301); exit; }
 });
 

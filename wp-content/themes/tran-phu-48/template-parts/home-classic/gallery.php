@@ -1,10 +1,11 @@
 <?php
 if (!defined('ABSPATH')) exit;
 $photos=tp48_home_gallery();
+$gallery_ready=tp48_gallery_ready();
 $third_caption=trim((string)tp48_home_field('gallery','third_image_caption'));
 ?>
 <section class="gallery ruled" id="hinh-anh" aria-labelledby="gallery-title">
-<div class="gallery-copy"><h2 id="gallery-title"><?php echo tp48_home_text('gallery','title'); ?></h2><p><?php echo tp48_home_text('gallery','description',true); ?></p><?php if ($photos && tp48_home_field('gallery','button_label')): ?><button type="button" class="text-link" data-open-gallery><?php echo tp48_home_text('gallery','button_label'); ?> <span aria-hidden="true">⟶</span></button><?php endif; ?></div>
+<div class="gallery-copy"><h2 id="gallery-title"><?php if ($gallery_ready): ?><a href="<?php echo esc_url(tp48_page_url('hinh-anh')); ?>"><?php endif; ?><?php echo tp48_home_text('gallery','title'); ?><?php if ($gallery_ready): ?></a><?php endif; ?></h2><p><?php echo tp48_home_text('gallery','description',true); ?></p><?php if ($gallery_ready && tp48_home_field('gallery','button_label')): ?><a class="text-link" href="<?php echo esc_url(tp48_page_url('hinh-anh')); ?>"><?php echo tp48_home_text('gallery','button_label'); ?> <span aria-hidden="true">⟶</span></a><?php elseif ($photos && tp48_home_field('gallery','button_label')): ?><button type="button" class="text-link" data-open-gallery><?php echo tp48_home_text('gallery','button_label'); ?> <span aria-hidden="true">⟶</span></button><?php endif; ?></div>
 <div class="gallery-grid" style="--tp48-gallery-columns:<?php echo max(1,min(3,count($photos))); ?>">
 <?php foreach ($photos as $i=>$photo): ?>
 <figure class="gallery-photo">
