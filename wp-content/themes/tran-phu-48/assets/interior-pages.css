@@ -162,4 +162,4 @@
 .images-grid .images-photo img{aspect-ratio:4/3;object-fit:cover}
 .images-page+.lightbox figcaption{text-align:left;white-space:pre-line}
 @media(max-width:1000px){.images-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){.images-grid{grid-template-columns:1fr;gap:32px}.images-photo figcaption{font-size:14px}.images-page .overview-actions{flex-wrap:wrap}}
+@media(max-width:600px){.images-grid{grid-template-columns:1fr;gap:32px}.images-photo figcaption{font-size:14px}}

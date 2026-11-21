@@ -49,8 +49,8 @@ if (tp48_detail_field('overview_source_text') || (is_array($source) && !empty($s
 <?php if (is_array($source) && !empty($source['url'])): ?><a href="<?php echo esc_url($source['url']); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html(!empty($source['title']) ? $source['title']:'Xem nguồn quy hoạch'); ?><span class="sr-only"> (mở tab mới)</span></a><?php endif; ?>
 </p><?php endif; ?>
 <nav class="overview-actions" aria-label="Tìm hiểu dự án">
-<a class="button outline" href="<?php echo esc_url(tp48_page_url('vi-tri')); ?>">Khám phá vị trí</a>
-<a class="button outline" href="<?php echo esc_url(tp48_page_url('tien-do')); ?>">Theo dõi tiến độ</a>
+<a class="button outline" href="<?php echo esc_url(tp48_page_url('vi-tri')); ?>">Khám phá vị trí <span aria-hidden="true">→</span></a>
+<a class="button outline" href="<?php echo esc_url(tp48_page_url('tien-do')); ?>">Theo dõi tiến độ <span aria-hidden="true">→</span></a>
 </nav>
 </div>
 </main>

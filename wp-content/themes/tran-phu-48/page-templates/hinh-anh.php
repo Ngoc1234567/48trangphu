@@ -23,9 +23,11 @@ get_header();
 </figure>
 <?php endfor; ?>
 </div></section>
-<nav class="section-space ruled overview-actions" aria-label="Tìm hiểu dự án">
-<a class="button outline" href="<?php echo esc_url(tp48_page_url('vi-tri')); ?>"><?php echo esc_html(tp48_gallery_field('location_label')); ?></a>
-<a class="button outline" href="<?php echo esc_url(tp48_page_url('tien-do')); ?>"><?php echo esc_html(tp48_gallery_field('progress_label')); ?></a>
+<div class="section-space ruled overview-closing">
+<nav class="overview-actions" aria-label="Tìm hiểu dự án">
+<a class="button outline" href="<?php echo esc_url(tp48_page_url('vi-tri')); ?>"><?php echo esc_html(tp48_gallery_field('location_label')); ?> <span aria-hidden="true">→</span></a>
+<a class="button outline" href="<?php echo esc_url(tp48_page_url('tien-do')); ?>"><?php echo esc_html(tp48_gallery_field('progress_label')); ?> <span aria-hidden="true">→</span></a>
 </nav>
+</div>
 </main>
 <?php get_template_part('template-parts/lightbox'); get_footer(); ?>
