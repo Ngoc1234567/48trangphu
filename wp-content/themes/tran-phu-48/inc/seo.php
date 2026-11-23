@@ -1,5 +1,17 @@
 <?php
 if (!defined('ABSPATH')) exit;
+
+// Replace the legacy demo share image while preserving custom page images.
+function tp48_share_image_url($url) {
+    $parts=wp_parse_url($url);
+    if (strtolower($parts['host'] ?? '')==='wpwebdemo.io.vn' && ($parts['path'] ?? '')==='/wp-content/themes/tran-phu-48/assets/images/hero.jpg') {
+        return home_url($parts['path'],'https');
+    }
+    return $url;
+}
+add_filter('wpseo_opengraph_image','tp48_share_image_url');
+add_filter('wpseo_twitter_image','tp48_share_image_url');
+
 function tp48_ga4_id() {
     $id=trim((string)tp48_text('ga4'));
     return wp_get_environment_type()==='production' && preg_match('/^G-[A-Z0-9]+$/',$id) ? $id : '';
