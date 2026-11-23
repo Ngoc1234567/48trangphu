@@ -76,7 +76,7 @@ if(document.querySelector('link[href*="home-classic.css"]')){
   if(innerWidth>700){const style=getComputedStyle(header);const available=header.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight);const brand=header.querySelector('.brand');const required=(brand?.getBoundingClientRect().width||0)+nav.scrollWidth+parseFloat(style.columnGap||0);header.classList.toggle('is-menu-collapsed',required>available+1);}
   if(before!==header.classList.contains('is-menu-collapsed'))closeMenu();
  };
- window.addEventListener('resize',fitHomeMenu);if(document.fonts)document.fonts.ready.then(fitHomeMenu);fitHomeMenu();
+ window.addEventListener('resize',fitHomeMenu);if(document.fonts){document.fonts.ready.then(fitHomeMenu);document.fonts.addEventListener('loadingdone',fitHomeMenu);}fitHomeMenu();
 }
 const dialog=document.querySelector('.lightbox');
 const photos=[...document.querySelectorAll('[data-gallery-index]')];
