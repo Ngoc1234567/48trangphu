@@ -3,6 +3,7 @@ if (!defined('ABSPATH')) exit;
 require_once __DIR__ . '/inc/setup.php';
 require_once __DIR__ . '/inc/acf-home.php';
 require_once __DIR__ . '/inc/acf-pages.php';
+require_once __DIR__ . '/inc/gallery-page.php';
 require_once __DIR__ . '/inc/contact.php';
 require_once __DIR__ . '/inc/contact-cf7.php';
 require_once __DIR__ . '/inc/review-updates.php';

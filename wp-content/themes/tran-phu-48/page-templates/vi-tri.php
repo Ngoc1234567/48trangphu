@@ -50,7 +50,7 @@ foreach (['corner','sea'] as $view):
     $path=(string)tp48_detail_field('location_'.$destination.'_path');
     if (!$label || !preg_match('~^/(?!/)[^\\\\\s]*$~D',$path)) continue;
 ?>
-<a class="button outline" href="<?php echo esc_url($path); ?>"><?php echo esc_html($label); ?></a>
+<a class="button outline" href="<?php echo esc_url($path); ?>"><?php echo esc_html($label); ?> <span aria-hidden="true">→</span></a>
 <?php endforeach; ?>
 </nav>
 </main>

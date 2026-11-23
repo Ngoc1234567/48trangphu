@@ -2,6 +2,9 @@
 for ($i=1;$i<=4;$i++) {
     $item=tp48_home_field('pillars','item_'.$i);
     if (is_array($item) && !empty($item['enabled'])) {
+        if (sanitize_title($item['title'] ?? '')==='hinh-anh') {
+            $item['link']=['url'=>tp48_page_url('hinh-anh'),'title'=>'','target'=>''];
+        }
         $items[]=$item;
     }
 }

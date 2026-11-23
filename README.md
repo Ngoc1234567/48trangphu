@@ -6,9 +6,6 @@ Theme WordPress cho website thông tin dự án tại 48 Trần Phú, Nha Trang,
 
 - Website: http://localhost:8080
 - Quản trị: http://localhost:8080/wp-admin/
-- Khởi động: chạy `.codex/local/start.ps1` bằng PowerShell. Apache của XAMPP phục vụ riêng cổng 8080; PHP 8.3 được cài riêng trong `.codex/local/php83`; MySQL dùng XAMPP.
-- Database local: `48_tranphu`. Thông tin đăng nhập WordPress ở `.codex/local/credentials.txt`, không nằm trong Git.
-- Bản local đặt `WP_ENVIRONMENT_TYPE=local`, `blog_public=0`, luôn noindex và không nạp GA4/GSC.
 
 ## Trang và template
 
@@ -60,8 +57,6 @@ Trên production, các trang Tổng quan/Vị trí/Mặt bằng/Tiện ích ch�
 ## Mã nguồn và sao lưu
 
 Theme nằm ở `wp-content/themes/tran-phu-48`, phần chức năng tách trong `inc/`, phần giao diện chung trong `template-parts/`. Yoast SEO ở `wp-content/plugins/wordpress-seo` (miễn phí, giấy phép theo file của plugin). Các plugin có sẵn: ACF, Classic Editor và Contact Form 7; form nhận cập nhật hiện dùng bộ xử lý của theme, không cần gán form CF7.
-
-`.codex/local/` chứa bản sao lưu trước khi sửa, bản sao lưu sau triển khai và kết quả kiểm thử nội bộ. Không commit thư mục này, `wp-config.php`, SQL, dữ liệu cá nhân hoặc thông tin đăng nhập. Khi bàn giao giữa các máy, chuyển database/uploads và thiết lập PHP riêng; Git chỉ mang source, không tự mang các trang/menu trong database.
 
 ## Trang chủ giữ giao diện cũ
 
