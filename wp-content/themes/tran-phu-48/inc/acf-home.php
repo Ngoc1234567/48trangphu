@@ -58,13 +58,43 @@ function tp48_home_image_data($value,$alt='') {
     }
     return is_string($value) && $value ? ['id'=>0,'url'=>$value,'alt'=>$alt,'caption'=>$alt] : [];
 }
-function tp48_home_image_html($value,$alt='',$class='',$priority=false) {
+function tp48_home_mobile_source($data) {
+    if (!$data) return '';
+    $srcset=$data['id'] ? wp_get_attachment_image_srcset($data['id'],'full'):'';
+    $metadata=$data['id'] ? wp_get_attachment_metadata($data['id']):[];
+    $attributes='media="(max-width: 700px)" srcset="'.esc_attr($srcset ?: $data['url']).'" sizes="100vw"';
+    if (!empty($metadata['width']) && !empty($metadata['height'])) {
+        $attributes.=' width="'.absint($metadata['width']).'" height="'.absint($metadata['height']).'"';
+    }
+    return '<source '.$attributes.'>';
+}
+// Match the picture sources so a phone never preloads the desktop hero as well.
+function tp48_home_hero_preload() {
+    if (!(is_front_page() || is_page_template('front-page.php'))) return;
+    $sections=tp48_home_sections();
+    if (!$sections || reset($sections)!=='hero') return;
+    $desktop=tp48_home_image_data(tp48_home_field('hero','image'));
+    if (!$desktop) return;
+    $mobile=tp48_home_image_data(tp48_home_field('hero','mobile_image'));
+    $sources=[[$desktop,$mobile ? '(min-width: 700.01px)':'']];
+    if ($mobile) $sources[]=[$mobile,'(max-width: 700px)'];
+    foreach ($sources as [$image,$media]) {
+        $srcset=$image['id'] ? wp_get_attachment_image_srcset($image['id'],'full'):'';
+        echo '<link rel="preload" as="image" href="'.esc_url($image['url']).'" fetchpriority="high"';
+        if ($media!=='') echo ' media="'.esc_attr($media).'"';
+        if ($srcset) echo ' imagesrcset="'.esc_attr($srcset).'" imagesizes="100vw"';
+        echo ">\n";
+    }
+}
+add_action('wp_head','tp48_home_hero_preload',1);
+function tp48_home_image_html($value,$alt='',$class='',$priority=false,$sizes='') {
     $data=tp48_home_image_data($value,$alt);
     if (!$data) return '';
-    $attributes=['class'=>$class,'alt'=>$data['alt'],'loading'=>$priority ? 'eager':'lazy'];
+    $attributes=['class'=>$class,'alt'=>$data['alt'],'loading'=>$priority ? 'eager':'lazy','decoding'=>'async'];
+    if ($sizes!=='') $attributes['sizes']=$sizes;
     if ($priority) $attributes['fetchpriority']='high';
     if ($data['id']) return wp_get_attachment_image($data['id'],'full',false,$attributes);
-    return '<img src="'.esc_url($data['url']).'" alt="'.esc_attr($data['alt']).'" class="'.esc_attr($class).'" loading="'.($priority ? 'eager':'lazy').'"'.($priority ? ' fetchpriority="high"':'').'>';
+    return '<img src="'.esc_url($data['url']).'" alt="'.esc_attr($data['alt']).'" class="'.esc_attr($class).'" loading="'.($priority ? 'eager':'lazy').'" decoding="async"'.($priority ? ' fetchpriority="high"':'').'>';
 }
 function tp48_home_link_attributes($link) {
     if (!is_array($link) || empty($link['url'])) return '';

@@ -59,7 +59,7 @@ toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expan
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
 document.addEventListener('click',e=>{if(!e.target.closest('.site-header'))closeMenu();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&toggle?.getAttribute('aria-expanded')==='true'){closeMenu();toggle.focus();}});
-matchMedia(document.querySelector('link[href*="home-classic.css"]') ? '(min-width: 701px)' : '(min-width: 901px)').addEventListener('change',closeMenu);
+matchMedia(home ? '(min-width: 701px)' : '(min-width: 901px)').addEventListener('change',closeMenu);
 const journalToggle=document.querySelector('[data-journal-toggle]');
 journalToggle?.addEventListener('click',()=>{
  const entries=document.querySelector('#journal-entries');if(!entries)return;
@@ -68,7 +68,7 @@ journalToggle?.addEventListener('click',()=>{
  if(expanded)entries.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
 });
 // A chosen homepage menu may be longer than the original five links.
-if(document.querySelector('link[href*="home-classic.css"]')){
+if(home){
  const header=document.querySelector('.site-header');
  const fitHomeMenu=()=>{
   if(!header||!nav||!toggle)return;

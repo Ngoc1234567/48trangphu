@@ -11,25 +11,25 @@ add_action('after_setup_theme', function () {
     register_nav_menus(['primary'=>'Menu chính', 'footer'=>'Menu chân trang']);
 });
 add_action('wp_enqueue_scripts', function () {
-    wp_enqueue_style('tp48-fonts','https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap',[],null);
+    wp_enqueue_style('tp48-fonts',get_template_directory_uri().'/assets/fonts.css',[],filemtime(get_template_directory().'/assets/fonts.css'));
     $classic=is_front_page() || is_page_template('front-page.php');
     $css=$classic ? '/assets/home-classic.css' : '/style.css';
-    wp_enqueue_style('tp48', get_template_directory_uri().$css, [], filemtime(get_template_directory().$css));
-    tp48_enqueue_small_style('tp48-footer','/assets/footer.css',$classic);
+    tp48_enqueue_theme_style('tp48',$css,$classic,[]);
+    tp48_enqueue_theme_style('tp48-footer','/assets/footer.css',$classic);
     if (!$classic) wp_enqueue_style('tp48-interior', get_template_directory_uri().'/assets/interior-pages.css', ['tp48'], filemtime(get_template_directory().'/assets/interior-pages.css'));
-    tp48_enqueue_small_style('tp48-contact','/assets/contact.css',$classic);
+    tp48_enqueue_theme_style('tp48-contact','/assets/contact.css',$classic);
     wp_enqueue_script('tp48', get_template_directory_uri().'/assets/site.js', [], filemtime(get_template_directory().'/assets/site.js'), true);
 });
-// Inline the small homepage supplements to avoid two blocking requests on mobile.
-function tp48_enqueue_small_style($handle,$file,$inline=false) {
+// Send homepage styles with the HTML so hero rendering does not wait for CSS requests.
+function tp48_enqueue_theme_style($handle,$file,$inline=false,$dependencies=['tp48']) {
     $path=get_template_directory().$file;
     if ($inline && is_readable($path)) {
-        wp_register_style($handle,false,['tp48'],null);
+        wp_register_style($handle,false,$dependencies,null);
         wp_enqueue_style($handle);
         wp_add_inline_style($handle,file_get_contents($path));
         return;
     }
-    wp_enqueue_style($handle,get_template_directory_uri().$file,['tp48'],filemtime($path));
+    wp_enqueue_style($handle,get_template_directory_uri().$file,$dependencies,filemtime($path));
 }
 add_filter('style_loader_tag',function ($html,$handle,$href) {
     if ($handle!=='tp48-fonts') return $html;
@@ -37,13 +37,6 @@ add_filter('style_loader_tag',function ($html,$handle,$href) {
     return '<link rel="stylesheet" id="tp48-fonts-css" href="'.esc_url($href).'" media="print" onload="this.onload=null;this.media=\'all\'">'
         .'<noscript>'.$html.'</noscript>';
 },10,3);
-add_filter('wp_resource_hints',function ($urls,$relation_type) {
-    if ($relation_type==='preconnect') {
-        $urls[]='https://fonts.googleapis.com';
-        $urls[]=['href'=>'https://fonts.gstatic.com','crossorigin'=>'anonymous'];
-    }
-    return $urls;
-},10,2);
 function tp48_text($key, $default = '') { return get_theme_mod('tp48_'.$key, $default); }
 function tp48_image($key) {
     $defaults=['hero'=>'hero','location'=>'coast','sunrise'=>'sunrise','journal'=>'construction'];
