@@ -16,7 +16,6 @@ add_action('wp_enqueue_scripts',function () {
 function tp48_should_noindex() {
     if (wp_get_environment_type()!=='production') return true;
     if (is_search() || is_404()) return true;
-    if (is_page_template('page-templates/hinh-anh.php') && !tp48_gallery_field('ready')) return true;
     if (is_page(['chinh-sach-bao-mat'])) return true;
     if (is_page_template(['page-templates/tong-quan.php','page-templates/vi-tri.php','page-templates/mat-bang.php','page-templates/tien-ich.php']) && get_post_meta(get_queried_object_id(),'_tp48_ready',true)!=='1') return true;
     if (is_page('tien-do') && !(wp_count_posts('tp48_journal')->publish ?? 0)) return true;
@@ -66,7 +65,6 @@ add_filter('wpseo_metadesc',function ($description) {
 add_filter('wpseo_sitemap_entry',function ($url,$type,$object) {
     if ($type!=='post' || !($object instanceof WP_Post) || $object->post_type!=='page') return $url;
     $template=get_page_template_slug($object->ID);
-    if ($template==='page-templates/hinh-anh.php' && !tp48_gallery_field('ready',$object->ID)) return false;
     if (in_array($template,['page-templates/tong-quan.php','page-templates/vi-tri.php','page-templates/mat-bang.php','page-templates/tien-ich.php'],true) && get_post_meta($object->ID,'_tp48_ready',true)!=='1') return false;
     if (in_array($object->post_name,['dau-an','nhat-ky','chinh-sach-bao-mat'],true)) return false;
     if ($object->post_name==='tien-do' && !(wp_count_posts('tp48_journal')->publish ?? 0)) return false;
