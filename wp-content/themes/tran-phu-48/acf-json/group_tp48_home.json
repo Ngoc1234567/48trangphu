@@ -1645,12 +1645,29 @@
                     "bidirectional_target": []
                 },
                 {
+                    "key": "field_tp48_home_gallery_short_captions",
+                    "label": "Chú thích ngắn dưới ảnh",
+                    "name": "short_captions",
+                    "type": "textarea",
+                    "instructions": "Mỗi dòng là chú thích ngắn cho một ảnh, theo thứ tự ảnh đã chọn. Để dòng trống nếu muốn ẩn chú thích của ảnh tương ứng. Nội dung này chỉ hiện dưới ảnh ở Trang chủ; chú thích khi phóng lớn lấy từ Thư viện ảnh.",
+                    "required": false,
+                    "conditional_logic": false,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "rows": 4,
+                    "new_lines": "",
+                    "default_value": "Khu đất hướng biển\nĐường bờ biển Nha Trang\nMô phỏng ý tưởng"
+                },
+                {
                     "key": "field_tp48_home_gallery_third_image_caption",
-                    "label": "Chú thích dưới ảnh số 3",
+                    "label": "Chú thích bổ sung khi phóng lớn ảnh số 3",
                     "name": "third_image_caption",
                     "aria-label": "",
                     "type": "textarea",
-                    "instructions": "Hiện ngay dưới ảnh thứ 3 trong danh sách ảnh đã chọn, bên ngoài khung ảnh, trên máy tính và điện thoại. Để trống để ẩn.",
+                    "instructions": "Thêm vào chú thích khi phóng lớn ảnh thứ 3. Không dùng làm chú thích ngắn bên ngoài. Để trống để ẩn phần bổ sung.",
                     "required": false,
                     "conditional_logic": false,
                     "wrapper": {
@@ -2328,5 +2345,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1795163161
+    "modified": 1795422254
 }

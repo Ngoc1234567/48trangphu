@@ -19,6 +19,7 @@ function tp48_home_defaults() {
         'journal'=>['enabled'=>1,'order'=>60,'image'=>tp48_image('journal'),'alt'=>'Ảnh minh họa hoạt động xây dựng, không phải ảnh tiến độ thực tế của dự án','image_note'=>'','title'=>'Tiến độ công trình','description'=>"Cập nhật tiến độ thi công, hình ảnh thực tế\nvà những dấu mốc quan trọng của dự án.",'button_label'=>'Xem tiến độ','mode'=>'page','button'=>['url'=>tp48_page_url('tien-do'),'title'=>'Xem tiến độ','target'=>''],'posts'=>[],'limit'=>6,'show_date'=>1,'show_excerpt'=>1,'empty_message'=>'Nhật ký công trình sẽ được cập nhật tại đây khi có thông tin chính thức.'],
         'contact'=>['enabled'=>1,'order'=>70,'title'=>"Khám phá thêm\nvề 48 Trần Phú",'name_label'=>'Họ và tên','phone_label'=>'Số điện thoại','email_label'=>'Email','button_label'=>'Nhận cập nhật','consent_text'=>'Tôi đồng ý nhận liên hệ/cập nhật theo','privacy_link'=>['url'=>tp48_page_url('chinh-sach-bao-mat'),'title'=>'chính sách quyền riêng tư','target'=>''],'note'=>'Thông tin được sử dụng để phản hồi yêu cầu tìm hiểu của bạn.','success_message'=>'Cảm ơn bạn. Thông tin của bạn đã được ghi nhận.'],
     ];
+    $defaults['gallery']['short_captions']="Khu đất hướng biển\nĐường bờ biển Nha Trang\nMô phỏng ý tưởng";
     return $defaults;
 }
 function tp48_home_post_id() {
