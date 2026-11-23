@@ -20,6 +20,17 @@ add_action('wp_enqueue_scripts', function () {
     tp48_enqueue_theme_style('tp48-contact','/assets/contact.css',$classic);
     wp_enqueue_script('tp48', get_template_directory_uri().'/assets/site.js', [], filemtime(get_template_directory().'/assets/site.js'), true);
 });
+// The homepage form stylesheet is small; keep its rules without a blocking request.
+add_action('wp_enqueue_scripts',function () {
+    if (!(is_front_page() || is_page_template('front-page.php')) || !defined('WPCF7_PLUGIN_DIR')) return;
+    $styles=wp_styles();
+    $style=$styles->registered['contact-form-7'] ?? null;
+    $path=WPCF7_PLUGIN_DIR.'/includes/css/styles.css';
+    if (!$style || !wp_style_is('contact-form-7','enqueued') || !is_readable($path)) return;
+    $css=file_get_contents($path);
+    if ($css===false || preg_match('/url\s*\(|@import/i',$css)) return;
+    if (wp_add_inline_style('contact-form-7',$css)) $style->src=false;
+},100);
 // Send homepage styles with the HTML so hero rendering does not wait for CSS requests.
 function tp48_enqueue_theme_style($handle,$file,$inline=false,$dependencies=['tp48']) {
     $path=get_template_directory().$file;
