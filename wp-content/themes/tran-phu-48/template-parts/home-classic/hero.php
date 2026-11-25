@@ -9,8 +9,8 @@ $video_id=absint(tp48_home_field('hero','video'));$video=$video_id && in_array(g
 ?>
 <figure class="hero-figure">
 <section class="hero hero-concept" aria-labelledby="hero-title">
-    <?php if ($mobile): ?><picture><source media="(max-width: 700px)" srcset="<?php echo esc_url($mobile['url']); ?>"><?php endif; ?>
-    <?php echo tp48_home_image_html(tp48_home_field('hero','image'),tp48_home_field('hero','alt'),'hero-image',true); ?>
+    <?php if ($mobile): ?><picture><?php echo tp48_home_mobile_source($mobile); ?><?php endif; ?>
+    <?php echo tp48_home_image_html(tp48_home_field('hero','image'),tp48_home_field('hero','alt'),'hero-image',true,'100vw'); ?>
     <?php if ($mobile): ?></picture><?php endif; ?>
     <?php if ($video): ?><video class="hero-video" autoplay muted loop playsinline aria-label="Video giới thiệu"><source src="<?php echo esc_url($video); ?>" type="<?php echo esc_attr(get_post_mime_type($video_id)); ?>"></video><button class="video-toggle" type="button">Tạm dừng video</button><?php endif; ?>
     <div class="hero-content">

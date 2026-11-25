@@ -11,14 +11,43 @@ add_action('after_setup_theme', function () {
     register_nav_menus(['primary'=>'Menu chính', 'footer'=>'Menu chân trang']);
 });
 add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_style('tp48-fonts',get_template_directory_uri().'/assets/fonts.css',[],filemtime(get_template_directory().'/assets/fonts.css'));
     $classic=is_front_page() || is_page_template('front-page.php');
     $css=$classic ? '/assets/home-classic.css' : '/style.css';
-    wp_enqueue_style('tp48', get_template_directory_uri().$css, [], filemtime(get_template_directory().$css));
-    wp_enqueue_style('tp48-footer', get_template_directory_uri().'/assets/footer.css', ['tp48'], filemtime(get_template_directory().'/assets/footer.css'));
+    tp48_enqueue_theme_style('tp48',$css,$classic,[]);
+    tp48_enqueue_theme_style('tp48-footer','/assets/footer.css',$classic);
     if (!$classic) wp_enqueue_style('tp48-interior', get_template_directory_uri().'/assets/interior-pages.css', ['tp48'], filemtime(get_template_directory().'/assets/interior-pages.css'));
-    wp_enqueue_style('tp48-contact', get_template_directory_uri().'/assets/contact.css', ['tp48'], filemtime(get_template_directory().'/assets/contact.css'));
+    tp48_enqueue_theme_style('tp48-contact','/assets/contact.css',$classic);
     wp_enqueue_script('tp48', get_template_directory_uri().'/assets/site.js', [], filemtime(get_template_directory().'/assets/site.js'), true);
 });
+// The homepage form stylesheet is small; keep its rules without a blocking request.
+add_action('wp_enqueue_scripts',function () {
+    if (!(is_front_page() || is_page_template('front-page.php')) || !defined('WPCF7_PLUGIN_DIR')) return;
+    $styles=wp_styles();
+    $style=$styles->registered['contact-form-7'] ?? null;
+    $path=WPCF7_PLUGIN_DIR.'/includes/css/styles.css';
+    if (!$style || !wp_style_is('contact-form-7','enqueued') || !is_readable($path)) return;
+    $css=file_get_contents($path);
+    if ($css===false || preg_match('/url\s*\(|@import/i',$css)) return;
+    if (wp_add_inline_style('contact-form-7',$css)) $style->src=false;
+},100);
+// Send homepage styles with the HTML so hero rendering does not wait for CSS requests.
+function tp48_enqueue_theme_style($handle,$file,$inline=false,$dependencies=['tp48']) {
+    $path=get_template_directory().$file;
+    if ($inline && is_readable($path)) {
+        wp_register_style($handle,false,$dependencies,null);
+        wp_enqueue_style($handle);
+        wp_add_inline_style($handle,file_get_contents($path));
+        return;
+    }
+    wp_enqueue_style($handle,get_template_directory_uri().$file,$dependencies,filemtime($path));
+}
+add_filter('style_loader_tag',function ($html,$handle,$href) {
+    if ($handle!=='tp48-fonts') return $html;
+    // Load fonts without delaying first paint; retain fonts when JavaScript is off.
+    return '<link rel="stylesheet" id="tp48-fonts-css" href="'.esc_url($href).'" media="print" onload="this.onload=null;this.media=\'all\'">'
+        .'<noscript>'.$html.'</noscript>';
+},10,3);
 function tp48_text($key, $default = '') { return get_theme_mod('tp48_'.$key, $default); }
 function tp48_image($key) {
     $defaults=['hero'=>'hero','location'=>'coast','sunrise'=>'sunrise','journal'=>'construction'];

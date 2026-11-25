@@ -8,6 +8,31 @@ function tp48_cf7_form() {
 function tp48_is_cf7_form($form) {
     return $form && (int)$form->id()===(int)get_option('tp48_cf7_form_id');
 }
+function tp48_cf7_honeypot_tag() {
+    return '[text tp48_hp_check tabindex:-1 autocomplete:off readonly]';
+}
+// Normalize only the trap in the existing saved form, including REST/schema requests.
+// Do not replace the form layout or mail settings edited in WordPress Admin.
+function tp48_cf7_honeypot_properties($properties,$form) {
+    if (tp48_is_cf7_form($form) && isset($properties['form'])) {
+        $properties['form']=preg_replace('/\[text\s+(?:website|tp48_hp_check)(?=[\s\]])[^\]]*\]/',tp48_cf7_honeypot_tag(),$properties['form']);
+    }
+    return $properties;
+}
+add_filter('wpcf7_contact_form_properties','tp48_cf7_honeypot_properties',10,2);
+function tp48_cf7_honeypot_attributes($html) {
+    if (!tp48_is_cf7_form(wpcf7_get_current_contact_form()) || !class_exists('WP_HTML_Tag_Processor')) return $html;
+    $processor=new WP_HTML_Tag_Processor($html);
+    while ($processor->next_tag('INPUT')) {
+        if ($processor->get_attribute('name')!=='tp48_hp_check') continue;
+        // These are hints for password managers; readonly also prevents normal Autofill.
+        foreach (['autocomplete'=>'off','tabindex'=>'-1','readonly'=>true,'aria-hidden'=>'true','spellcheck'=>'false','data-lpignore'=>'true','data-1p-ignore'=>'true','data-bwignore'=>'true'] as $name=>$value) {
+            $processor->set_attribute($name,$value);
+        }
+    }
+    return $processor->get_updated_html();
+}
+add_filter('wpcf7_form_elements','tp48_cf7_honeypot_attributes',20);
 function tp48_cf7_form_markup() {
     $privacy=esc_url(tp48_page_url('chinh-sach-bao-mat'));
     return '<div class="contact-form tp48-cf7-fields">'
@@ -15,7 +40,7 @@ function tp48_cf7_form_markup() {
         .'<label class="tp48-phone-field">Số điện thoại *[tel* phone maxlength:20 autocomplete:tel placeholder "Số điện thoại"]</label>'
         .'<label class="tp48-email-field">Email (không bắt buộc)[email email maxlength:254 autocomplete:email placeholder "Email (không bắt buộc)"]</label>'
         .'<div class="full-width tp48-acceptance">[acceptance consent]Tôi đồng ý nhận liên hệ và cập nhật theo <a href="'.$privacy.'">chính sách quyền riêng tư</a>.[/acceptance]</div>'
-        .'<div class="honeypot" aria-hidden="true">[text website tabindex:-1 autocomplete:off]</div>'
+        .'<div class="honeypot" aria-hidden="true">'.tp48_cf7_honeypot_tag().'</div>'
         .'<div class="tp48-submit">[submit class:button class:gold "Nhận cập nhật"]</div></div>';
 }
 // Resolve the homepage during both page rendering and CF7 REST submissions.
@@ -127,10 +152,23 @@ add_filter('wpcf7_autop_or_not',function ($autop,$options) {
 function tp48_cf7_rate_key() {
     return 'tp48_'.hash_hmac('sha256',($_SERVER['REMOTE_ADDR'] ?? 'local'),wp_salt());
 }
-add_filter('wpcf7_spam',function ($spam,$submission) {
+function tp48_cf7_check_spam($spam,$submission) {
     if (!tp48_is_cf7_form($submission->get_contact_form())) return $spam;
-    return $spam || !empty($submission->get_posted_data('website')) || (bool)get_transient(tp48_cf7_rate_key());
-},10,2);
+    // Check the old name too: stale LiteSpeed pages and already-open tabs can still send it.
+    foreach (['tp48_hp_check','website'] as $field) {
+        $value=$submission->get_posted_data($field);
+        if ($value!==null && $value!=='' && $value!==[]) {
+            $submission->add_spam_log(['agent'=>'tp48_honeypot','reason'=>'Honeypot field is not empty.']);
+            return true;
+        }
+    }
+    if (get_transient(tp48_cf7_rate_key())) {
+        $submission->add_spam_log(['agent'=>'tp48_rate_limit','reason'=>'A submission from this address was already accepted within the last 60 seconds.']);
+        return true;
+    }
+    return $spam;
+}
+add_filter('wpcf7_spam','tp48_cf7_check_spam',10,2);
 add_action('wpcf7_before_send_mail',function ($form,&$abort,$submission) {
     if ($abort || !tp48_is_cf7_form($form)) return;
     $value=function ($key) use ($submission) { $value=$submission->get_posted_data($key); return is_scalar($value) ? sanitize_text_field((string)$value):''; };
