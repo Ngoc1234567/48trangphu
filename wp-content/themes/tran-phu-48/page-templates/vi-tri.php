@@ -11,7 +11,7 @@ $map_url=esc_url_raw((string)tp48_detail_field('map_link'),['http','https']) ?: 
 ?>
 <main id="main" class="section-page location-page">
 <section class="section-space ruled map-section" aria-labelledby="map-title">
-<div class="section-heading"><h2 id="map-title"><?php echo tp48_detail_text('location_heading'); ?></h2></div>
+<div class="section-heading"><h1 id="map-title"><?php echo tp48_detail_text('location_heading'); ?></h1></div>
 <p class="location-relationship"><?php echo tp48_detail_text('location_relationship'); ?></p>
 <?php if ($map_src): ?>
 <iframe class="location-map" title="<?php echo esc_attr($query ? 'Bản đồ: '.$query:'Bản đồ vị trí dự án'); ?>" src="<?php echo esc_url($map_src); ?>" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>

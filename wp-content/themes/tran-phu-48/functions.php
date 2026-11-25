@@ -9,6 +9,11 @@ require_once __DIR__ . '/inc/contact-cf7.php';
 require_once __DIR__ . '/inc/review-updates.php';
 require_once __DIR__ . '/inc/admin.php';
 require_once __DIR__ . '/inc/seo.php';
+// Default to the full-size image when inserting media in the editor.
+add_filter('option_image_default_size', function ($size) {
+    return 'full';
+});
+
 function tp48_icon($name) {
     $paths = [
         'pin' => '<path d="M24 43S9 28 9 18a15 15 0 1 1 30 0c0 10-15 25-15 25Z"/><circle cx="24" cy="18" r="6"/>',
