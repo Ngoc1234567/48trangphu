@@ -13,6 +13,11 @@ require_once __DIR__ . '/inc/seo.php';
 add_filter('option_image_default_size', function ($size) {
     return 'full';
 });
+// The media modal prioritizes the user's saved size over the site default.
+add_action('wp_enqueue_media', function () {
+    if (!is_admin()) return;
+    wp_add_inline_script('media-views', "window.setUserSetting('imgsize', 'full');", 'after');
+});
 
 function tp48_icon($name) {
     $paths = [
